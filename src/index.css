@@ -81,19 +81,41 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Muscle diagram animations */
+/* Enhanced muscle diagram styling */
 .muscle-group {
-  transition: all 200ms ease-out;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  transform-origin: center;
 }
 
 .muscle-group:hover {
-  filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.5));
+  filter: drop-shadow(0 0 12px rgba(211, 47, 47, 0.6)) brightness(1.1);
 }
 
 .muscle-group.selected {
-  filter: drop-shadow(0 0 12px rgba(37, 99, 235, 0.8));
+  filter: drop-shadow(0 0 16px rgba(37, 99, 235, 0.9)) brightness(1.2);
 }
 
+.muscle-group.recovery-mode:hover {
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.3));
+}
+
+.muscle-path {
+  transition: all 300ms ease-out;
+}
+
+/* Skeleton structure styling */
+.skeleton-structure {
+  pointer-events: none;
+  transition: opacity 300ms ease-out;
+}
+
+/* Enhanced anatomical realism */
+.muscle-diagram {
+  background: radial-gradient(circle at center, #fafafa 0%, #f5f5f5 100%);
+  border-radius: 12px;
+  padding: 16px;
+}
 /* Exercise drag animations */
 .exercise-card {
   transition: all 200ms ease-out;
@@ -216,10 +238,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Mobile responsive adjustments */
+/* Enhanced mobile responsive adjustments */
 @media (max-width: 768px) {
   .muscle-diagram {
     max-width: 100%;
     height: auto;
+    padding: 8px;
+  }
+  
+  .muscle-diagram svg {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+  
+  .muscle-group {
+    cursor: pointer;
+  }
+  
+  .muscle-group:hover {
+    filter: drop-shadow(0 0 8px rgba(211, 47, 47, 0.4));
   }
   
   .exercise-card {
@@ -232,6 +270,18 @@ h1, h2, h3, h4, h5, h6 {
   
   .metric-card {
     padding: 16px;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .muscle-group:hover {
+    filter: none;
+  }
+  
+  .muscle-group:active {
+    filter: drop-shadow(0 0 8px rgba(211, 47, 47, 0.6));
+    transform: scale(0.95);
   }
 }
 
@@ -410,9 +460,16 @@ filter: brightness(1) contrast(1);
 }
 
 /* High contrast mode support */
+/* Enhanced high contrast and accessibility support */
 @media (prefers-contrast: high) {
   .muscle-group.selected {
-    filter: drop-shadow(0 0 0 2px #000000);
+    filter: drop-shadow(0 0 0 3px #000000);
+    outline: 2px solid #000000;
+  }
+  
+  .muscle-group:focus {
+    outline: 3px solid #000000;
+    outline-offset: 2px;
   }
   
   .exercise-card {
@@ -421,8 +478,38 @@ filter: brightness(1) contrast(1);
   
   .muscle-recovery-region {
     stroke: #000000;
-    stroke-width: 2;
+    stroke-width: 3;
+  }
+  
+  .skeleton-structure {
+    opacity: 0.8;
+    stroke: #000000;
+  }
 }
+
+/* Focus indicators for accessibility */
+.muscle-group:focus {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+.muscle-group:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Anatomical diagram enhancements */
+.muscle-diagram:hover .skeleton-structure {
+  opacity: 0.5;
+}
+
+/* Loading state for muscle diagrams */
+.muscle-diagram.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.muscle-diagram.loading .muscle-group {
+  animation: pulse 2s ease-in-out infinite;
 }
 
 /* Water tracker animations */
