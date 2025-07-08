@@ -34,7 +34,7 @@ function validateProgressData(data) {
 }
 
 export const progressService = {
-  async getAllProgress() {
+  async getAll() {
     try {
       await delay(500);
       const validatedData = validateProgressData(progressData);
@@ -43,9 +43,9 @@ export const progressService = {
       console.error('Error fetching progress data:', error);
       return [];
     }
-},
+  },
 
-  async addProgress(progressEntry) {
+async create(progressEntry) {
     try {
       await delay(300);
       
