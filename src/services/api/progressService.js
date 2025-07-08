@@ -19,22 +19,65 @@ export const progressService = {
 
 async create(progressEntry) {
     await delay(400);
+    
+    // Validate and sanitize photo URLs
+    const sanitizePhotoUrl = (url) => {
+      if (!url || typeof url !== 'string') return null;
+      
+      // Check if URL is accessible (basic validation)
+      try {
+        new URL(url);
+        // For demo purposes, return null for external URLs that might fail
+        // In production, you'd want to validate URL accessibility
+        if (url.includes('unsplash.com') || url.includes('external')) {
+          return null; // Remove unreliable external URLs
+        }
+        return url;
+      } catch {
+        return null;
+      }
+    };
+    
     const newProgress = {
       ...progressEntry,
       Id: Math.max(...progressData.map(p => p.Id)) + 1,
-      beforePhotoUrl: progressEntry.beforePhotoUrl || null,
-      afterPhotoUrl: progressEntry.afterPhotoUrl || null
+      beforePhotoUrl: sanitizePhotoUrl(progressEntry.beforePhotoUrl),
+      afterPhotoUrl: sanitizePhotoUrl(progressEntry.afterPhotoUrl)
     };
     return { ...newProgress };
   },
 
-  async update(id, updates) {
+async update(id, updates) {
     await delay(300);
     const progressIndex = progressData.findIndex(p => p.Id === parseInt(id));
     if (progressIndex === -1) {
       throw new Error('Progress record not found');
     }
-    const updatedProgress = { ...progressData[progressIndex], ...updates };
+    
+    // Sanitize photo URLs in updates
+    const sanitizePhotoUrl = (url) => {
+      if (!url || typeof url !== 'string') return null;
+      
+      try {
+        new URL(url);
+        if (url.includes('unsplash.com') || url.includes('external')) {
+          return null;
+        }
+        return url;
+      } catch {
+        return null;
+      }
+    };
+    
+    const sanitizedUpdates = { ...updates };
+    if (sanitizedUpdates.beforePhotoUrl !== undefined) {
+      sanitizedUpdates.beforePhotoUrl = sanitizePhotoUrl(sanitizedUpdates.beforePhotoUrl);
+    }
+    if (sanitizedUpdates.afterPhotoUrl !== undefined) {
+      sanitizedUpdates.afterPhotoUrl = sanitizePhotoUrl(sanitizedUpdates.afterPhotoUrl);
+    }
+    
+    const updatedProgress = { ...progressData[progressIndex], ...sanitizedUpdates };
     return { ...updatedProgress };
   },
 

@@ -257,15 +257,30 @@ const getThisWeekWorkouts = () => {
                     {/* Before Photo */}
                     <div className="photo-container">
                       <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-                        Before
-                      </div>
+<h4 className="font-semibold text-gray-900 mb-4">Before</h4>
                       {entry.beforePhotoUrl ? (
                         <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
                           <img
                             src={entry.beforePhotoUrl}
                             alt="Before progress photo"
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                            onLoad={(e) => {
+                              e.target.style.display = 'block';
+                              if (e.target.nextSibling) {
+                                e.target.nextSibling.style.display = 'none';
+                              }
+                            }}
                           />
+                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
+                            <div className="text-center text-gray-500">
+                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                              <p className="text-xs">Photo unavailable</p>
+                            </div>
+                          </div>
                         </div>
                       ) : (
                         <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
@@ -276,19 +291,31 @@ const getThisWeekWorkouts = () => {
                         </div>
                       )}
                     </div>
-                    
-                    {/* After Photo */}
-                    <div className="photo-container">
-                      <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-                        After
-                      </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-4">After</h4>
                       {entry.afterPhotoUrl ? (
-                        <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
+<div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
                           <img
                             src={entry.afterPhotoUrl}
                             alt="After progress photo"
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                            onLoad={(e) => {
+                              e.target.style.display = 'block';
+                              if (e.target.nextSibling) {
+                                e.target.nextSibling.style.display = 'none';
+                              }
+                            }}
                           />
+                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
+                            <div className="text-center text-gray-500">
+                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                              <p className="text-xs">Photo unavailable</p>
+                            </div>
+                          </div>
                         </div>
                       ) : (
                         <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
@@ -299,6 +326,11 @@ const getThisWeekWorkouts = () => {
                         </div>
                       )}
                     </div>
+                  </div>
+                  <div className="mt-4 text-sm text-gray-600">
+                    <p><strong>Weight:</strong> {entry.weight}lbs</p>
+                    <p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
+                  </div>
                   </div>
                   
                   {/* Comparison Stats */}
