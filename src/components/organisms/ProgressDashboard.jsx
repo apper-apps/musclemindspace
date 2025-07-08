@@ -567,11 +567,15 @@ const getThisWeekWorkouts = () => {
                             <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
                             <p className="text-xs">No photo</p>
                           </div>
-                        </div>
-                      )}
 </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-4">After</h4>
+                      )}
+                    </div>
+                    
+                    {/* After Photo */}
+                    <div className="photo-container">
+                      <div className="text-xs font-medium text-gray-600 mb-2 text-center">
+                        <h4 className="font-semibold text-gray-900 mb-4">After</h4>
+                      </div>
                       {entry?.afterPhotoUrl ? (
                         <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
                           <img
@@ -608,32 +612,32 @@ const getThisWeekWorkouts = () => {
                   </div>
                   <div className="mt-4 text-sm text-gray-600">
                     <p><strong>Weight:</strong> {entry.weight}lbs</p>
-                    <p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
+<p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
                   </div>
-</div>
+                </div>
                   
-                  {/* Comparison Stats */}
-                  {entry.beforePhotoUrl && entry.afterPhotoUrl && (
-                    <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-3 border-t border-gray-200">
-                      <div className="flex justify-center space-x-6 text-xs">
-                        <div className="text-center">
-                          <p className="font-medium text-gray-900">Chest</p>
-                          <p className="text-secondary">{entry?.measurements?.chest || 0}"</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-gray-900">Waist</p>
-                          <p className="text-secondary">{entry?.measurements?.waist || 0}"</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-gray-900">Arms</p>
-                          <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
-                        </div>
+                {/* Comparison Stats */}
+                {entry.beforePhotoUrl && entry.afterPhotoUrl && (
+                  <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-3 border-t border-gray-200">
+                    <div className="flex justify-center space-x-6 text-xs">
+                      <div className="text-center">
+                        <p className="font-medium text-gray-900">Chest</p>
+                        <p className="text-secondary">{entry?.measurements?.chest || 0}"</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="font-medium text-gray-900">Waist</p>
+                        <p className="text-secondary">{entry?.measurements?.waist || 0}"</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="font-medium text-gray-900">Arms</p>
+                        <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
                       </div>
                     </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
             
             {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).length === 0 && (
               <div className="text-center py-12 text-gray-500">
