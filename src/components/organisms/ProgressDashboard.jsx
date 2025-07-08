@@ -527,152 +527,180 @@ const getThisWeekWorkouts = () => {
                       {new Date(entry.date).toLocaleDateString()}
                     </p>
                     <p className="text-xs text-secondary">
-                      Weight: {entry.weight} lbs
+                      Progress Entry
                     </p>
                   </div>
                   
-                  <div className="photo-comparison-slider relative bg-gray-100 rounded-lg overflow-hidden">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                      {/* Before Photo */}
-                      <div className="photo-container">
-                        <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-                          <h4 className="font-semibold text-gray-900 mb-4">Before</h4>
-                        </div>
-                        {entry?.beforePhotoUrl ? (
-                          <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
-                            <img
-                              src={entry.beforePhotoUrl}
-                              alt="Before progress photo"
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                                e.target.nextSibling.style.display = 'flex';
-                              }}
-                              onLoad={(e) => {
-                                e.target.style.display = 'block';
-                                if (e.target.nextSibling) {
-                                  e.target.nextSibling.style.display = 'none';
-                                }
-                              }}
-                            />
-                            <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
-                              <div className="text-center text-gray-500">
-                                <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                                <p className="text-xs">Photo unavailable</p>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
-                            <div className="text-center text-gray-500">
-                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                              <p className="text-xs">No photo</p>
-                            </div>
-                          </div>
-                        )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {entry.beforePhotoUrl && (
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-gray-700">Before</p>
+                        <img 
+                          src={entry.beforePhotoUrl} 
+                          alt="Before" 
+                          className="w-full h-48 object-cover rounded-lg"
+                        />
                       </div>
-                      
-                      {/* After Photo */}
-                      <div className="photo-container">
-                        <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-                          <h4 className="font-semibold text-gray-900 mb-4">After</h4>
-                        </div>
-                        {entry?.afterPhotoUrl ? (
-                          <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
-                            <img
-                              src={entry.afterPhotoUrl}
-                              alt="After progress photo"
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.style.display = 'none';
-                                e.target.nextSibling.style.display = 'flex';
-                              }}
-                              onLoad={(e) => {
-                                e.target.style.display = 'block';
-                                if (e.target.nextSibling) {
-                                  e.target.nextSibling.style.display = 'none';
-                                }
-                              }}
-                            />
-                            <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
-                              <div className="text-center text-gray-500">
-                                <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                                <p className="text-xs">Photo unavailable</p>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
-                            <div className="text-center text-gray-500">
-                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                              <p className="text-xs">No photo</p>
-                            </div>
-                          </div>
-                        )}
+                    )}
+                    {entry.afterPhotoUrl && (
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-gray-700">After</p>
+                        <img 
+                          src={entry.afterPhotoUrl} 
+                          alt="After" 
+                          className="w-full h-48 object-cover rounded-lg"
+                        />
                       </div>
-                    </div>
-                    <div className="mt-4 text-sm text-gray-600">
-                      <p><strong>Weight:</strong> {entry.weight}lbs</p>
-                      <p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
-                    </div>
+                    )}
                   </div>
-                    
-                  {/* Comparison Stats */}
-                  {entry.beforePhotoUrl && entry.afterPhotoUrl && (
-                    <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-3 border-t border-gray-200">
-                      <div className="flex justify-center space-x-6 text-xs">
-                        <div className="text-center">
-                          <p className="font-medium text-gray-900">Chest</p>
-                          <p className="text-secondary">{entry?.measurements?.chest || 0}"</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-gray-900">Waist</p>
-                          <p className="text-secondary">{entry?.measurements?.waist || 0}"</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-gray-900">Arms</p>
-                          <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </motion.div>
               ))
             ) : (
-              <div className="text-center py-12 text-gray-500">
-                <ApperIcon name="Camera" className="w-12 h-12 mx-auto mb-4" />
-                <p className="font-medium mb-2">No progress photos yet</p>
-                <p className="text-sm">Add photos when logging your progress to see visual comparisons</p>
+              <div className="text-center py-8 text-gray-500">
+                <ApperIcon name="Camera" className="w-8 h-8 mx-auto mb-2" />
+                <p className="text-sm">No progress photos available</p>
               </div>
             )}
           </div>
         </div>
       )}
-      {/* Muscle Recovery Map */}
-      <div className="bg-white rounded-lg p-6 shadow-md">
-        <div className="flex items-center justify-between mb-4">
-          <h4 className="font-display font-semibold text-gray-900">
-            Muscle Recovery Status
-          </h4>
-          <Button
-            variant={showRecoveryMap ? "primary" : "outline"}
-            size="sm"
-            onClick={() => setShowRecoveryMap(!showRecoveryMap)}
-          >
-            <ApperIcon name="Activity" className="w-4 h-4 mr-2" />
-            {showRecoveryMap ? 'Hide Recovery' : 'Show Recovery'}
-          </Button>
-        </div>
-        
-        {showRecoveryMap && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="recovery-overlay"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      {/* Muscle Recovery Heat Map */}
+      {workoutHistory.length > 0 && (
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-display font-semibold text-gray-900">
+              Muscle Recovery Status
+            </h4>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setShowRecoveryMap(!showRecoveryMap)}
+            >
+              {showRecoveryMap ? 'Hide' : 'Show'} Recovery Map
+            </Button>
+          </div>
+          
+          {showRecoveryMap && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+            >
               <div className="space-y-4">
+<h5 className="font-medium text-gray-700">Recovery Heat Map</h5>
+                <div className="recovery-muscle-map bg-gray-50 rounded-lg p-4">
+                  <svg width="200" height="300" viewBox="0 0 200 300" className="mx-auto">
+                    <defs>
+                      <linearGradient id="recoveryLow" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#22C55E" stopOpacity="0.3" />
+                        <stop offset="100%" stopColor="#16A34A" stopOpacity="0.3" />
+                      </linearGradient>
+                      <linearGradient id="recoveryMedium" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.6" />
+                        <stop offset="100%" stopColor="#D97706" stopOpacity="0.6" />
+                      </linearGradient>
+                      <linearGradient id="recoveryHigh" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#EF4444" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#DC2626" stopOpacity="0.8" />
+                      </linearGradient>
+                    </defs>
+                    
+                    {/* Simplified muscle regions with recovery colors */}
+                    <rect x="80" y="40" width="40" height="30" rx="5" 
+                          fill={muscleRecoveryData.Chest?.intensity > 0.6 ? "url(#recoveryHigh)" : 
+                                muscleRecoveryData.Chest?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
+                          className="muscle-recovery-region" />
+                    <text x="100" y="58" textAnchor="middle" className="text-xs font-medium">Chest</text>
+                    
+                    <rect x="60" y="25" width="25" height="20" rx="3"
+                          fill={muscleRecoveryData.Shoulders?.intensity > 0.6 ? "url(#recoveryHigh)" : 
+                                muscleRecoveryData.Shoulders?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
+                          className="muscle-recovery-region" />
+                    <rect x="115" y="25" width="25" height="20" rx="3"
+                          fill={muscleRecoveryData.Shoulders?.intensity > 0.6 ? "url(#recoveryHigh)" : 
+                                muscleRecoveryData.Shoulders?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
+                          className="muscle-recovery-region" />
+                    <text x="100" y="38" textAnchor="middle" className="text-xs font-medium">Shoulders</text>
+                    
+                    <rect x="85" y="80" width="30" height="40" rx="5"
+                          fill={muscleRecoveryData.Abs?.intensity > 0.6 ? "url(#recoveryHigh)" : 
+                                muscleRecoveryData.Abs?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
+                          className="muscle-recovery-region" />
+                    <text x="100" y="103" textAnchor="middle" className="text-xs font-medium">Abs</text>
+                    
+                    <rect x="75" y="140" width="50" height="50" rx="8"
+                          fill={muscleRecoveryData.Quadriceps?.intensity > 0.6 ? "url(#recoveryHigh)" : 
+                                muscleRecoveryData.Quadriceps?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
+                          className="muscle-recovery-region" />
+                    <text x="100" y="168" textAnchor="middle" className="text-xs font-medium">Quads</text>
+                    
+                    <rect x="85" y="210" width="30" height="40" rx="5"
+                          fill={muscleRecoveryData.Calves?.intensity > 0.6 ? "url(#recoveryHigh)" : 
+                                muscleRecoveryData.Calves?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
+                          className="muscle-recovery-region" />
+                    <text x="100" y="233" textAnchor="middle" className="text-xs font-medium">Calves</text>
+                  </svg>
+                </div>
+                
+                <div className="recovery-legend flex items-center justify-center space-x-4 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded bg-green-400 opacity-30"></div>
+                    <span className="text-gray-600">Recovered</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded bg-amber-400 opacity-60"></div>
+                    <span className="text-gray-600">Moderate</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded bg-red-400 opacity-80"></div>
+                    <span className="text-gray-600">Needs Rest</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h5 className="font-medium text-gray-700">Recovery Details</h5>
+                <div className="space-y-3 max-h-80 overflow-y-auto">
+                  {Object.entries(muscleRecoveryData).map(([muscle, data]) => (
+                    <motion.div
+                      key={muscle}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-3 h-3 rounded-full ${
+                          data.intensity > 0.6 ? 'bg-red-500' :
+                          data.intensity > 0.3 ? 'bg-amber-500' : 'bg-green-500'
+                        }`}></div>
+                        <div>
+                          <p className="font-medium text-gray-900">{muscle}</p>
+                          <p className="text-xs text-gray-500">
+                            {data.lastWorked ? 
+                              `Last worked: ${Math.floor((new Date() - data.lastWorked) / (1000 * 60 * 60 * 24))} days ago` : 
+                              'Not recently worked'
+                            }
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-gray-700">
+                          {data.needsRest ? 'Rest' : 'Ready'}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {Math.round(data.intensity * 100)}% intensity
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
                 <h5 className="font-medium text-gray-700">Recovery Heat Map</h5>
                 <div className="recovery-muscle-map bg-gray-50 rounded-lg p-4">
                   <svg width="200" height="300" viewBox="0 0 200 300" className="mx-auto">
@@ -942,27 +970,29 @@ const getThisWeekWorkouts = () => {
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-display font-semibold text-gray-900">
               Weight Progress
-            </h4>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+<div className="flex items-center space-x-2 text-sm text-gray-600">
               <ApperIcon name="TrendingUp" className="w-4 h-4" />
-              <span>{getFilteredData().length} data points</span>
+              <span>Weight tracking</span>
             </div>
           </div>
-          {getFilteredData().length > 0 ? (
-            <div className="chart-container">
-              <Chart
-                options={getWeightChartData().options}
-                series={getWeightChartData().series}
-                type="line"
-                height={300}
-              />
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              <ApperIcon name="TrendingUp" className="w-8 h-8 mx-auto mb-2" />
-              <p className="text-sm">No weight data in selected range</p>
-            </div>
-          )}
+          <div className="chart-container" style={{ minHeight: '300px', width: '100%' }}>
+            {(() => {
+              const chartData = getWeightChartData();
+              return chartData && chartData.series && chartData.series.length > 0 ? (
+                <Chart
+                  options={chartData.options}
+                  series={chartData.series}
+                  type="line"
+                  height={300}
+                  width="100%"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-64 text-gray-500">
+                  <p>No weight data available</p>
+                </div>
+              );
+            })()}
+          </div>
         </div>
 
         {/* Body Measurements Chart */}
@@ -972,30 +1002,28 @@ const getThisWeekWorkouts = () => {
               Body Measurements
             </h4>
             <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <ApperIcon name="Ruler" className="w-4 h-4" />
-              <span>{selectedMetrics.length} metrics</span>
+              <ApperIcon name="Activity" className="w-4 h-4" />
+              <span>Selected metrics</span>
             </div>
           </div>
-          {getFilteredData().length > 0 && selectedMetrics.length > 0 ? (
-            <div className="chart-container">
-              <Chart
-                options={getBodyMeasurementsChartData().options}
-                series={getBodyMeasurementsChartData().series}
-                type="line"
-                height={300}
-              />
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              <ApperIcon name="Ruler" className="w-8 h-8 mx-auto mb-2" />
-              <p className="text-sm">
-                {getFilteredData().length === 0 
-                  ? 'No measurement data in selected range'
-                  : 'Select measurements to display'
-                }
-              </p>
-            </div>
-          )}
+          <div className="chart-container" style={{ minHeight: '300px', width: '100%' }}>
+            {(() => {
+              const chartData = getBodyMeasurementsChartData();
+              return chartData && chartData.series && chartData.series.length > 0 ? (
+                <Chart
+                  options={chartData.options}
+                  series={chartData.series}
+                  type="line"
+                  height={300}
+                  width="100%"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-64 text-gray-500">
+                  <p>No measurement data available</p>
+                </div>
+              );
+            })()}
+          </div>
         </div>
 
         {/* Workout Frequency Chart */}
@@ -1005,25 +1033,28 @@ const getThisWeekWorkouts = () => {
               Workout Frequency
             </h4>
             <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <ApperIcon name="Activity" className="w-4 h-4" />
-              <span>Last 12 weeks</span>
+              <ApperIcon name="BarChart" className="w-4 h-4" />
+              <span>Weekly breakdown</span>
             </div>
           </div>
-          {workoutHistory.length > 0 ? (
-            <div className="chart-container">
-              <Chart
-                options={getWorkoutFrequencyChartData().options}
-                series={getWorkoutFrequencyChartData().series}
-                type="column"
-                height={300}
-              />
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              <ApperIcon name="Activity" className="w-8 h-8 mx-auto mb-2" />
-              <p className="text-sm">No workout data available</p>
-            </div>
-          )}
+          <div className="chart-container" style={{ minHeight: '300px', width: '100%' }}>
+            {(() => {
+              const chartData = getWorkoutFrequencyChartData();
+              return chartData && chartData.series && chartData.series.length > 0 ? (
+                <Chart
+                  options={chartData.options}
+                  series={chartData.series}
+                  type="column"
+                  height={300}
+                  width="100%"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-64 text-gray-500">
+                  <p>No workout frequency data available</p>
+                </div>
+              );
+            })()}
+          </div>
         </div>
 
         {/* Weekly Progress Ring */}
