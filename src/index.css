@@ -558,8 +558,7 @@ filter: brightness(1) contrast(1);
     animation: none;
   }
   
-  .water-progress-bar {
+.water-progress-bar {
     transition: none;
   }
-}
 }
