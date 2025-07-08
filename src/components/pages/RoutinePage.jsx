@@ -57,7 +57,7 @@ const RoutinePage = () => {
           />
         </div>
 
-        {/* Exercise Library */}
+{/* Exercise Library */}
         <div className="lg:col-span-1">
           <ExerciseLibrary 
             selectedMuscles={selectedMuscles}
@@ -65,11 +65,12 @@ const RoutinePage = () => {
           />
         </div>
 
-        {/* Routine Builder */}
+{/* Routine Builder */}
         <div className="lg:col-span-1">
           <RoutineBuilder 
             selectedExercises={selectedExercises}
             onExerciseRemove={handleExerciseRemove}
+            onExerciseSelect={handleExerciseSelect}
           />
         </div>
       </div>

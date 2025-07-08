@@ -18,6 +18,7 @@ const RoutineBuilder = ({
   selectedExercises = [], 
   onExerciseRemove,
   onRoutineSave,
+  onExerciseSelect,
   className = "" 
 }) => {
   const [routineName, setRoutineName] = useState('');
@@ -92,15 +93,14 @@ const RoutineBuilder = ({
     if (!routineName.trim()) {
       alert('Please enter a routine name');
       return;
-    }
+}
 
-const routineData = {
+    const routineData = {
       name: routineName,
       exercises: selectedExercises || [],
       targetMuscles: [...new Set((selectedExercises || []).flatMap(ex => ex?.primaryMuscles || []))],
       createdAt: new Date().toISOString()
     };
-
     try {
       await routineService.create(routineData);
       if (onRoutineSave) {
@@ -112,12 +112,11 @@ const routineData = {
       console.error('Error saving routine:', error);
       alert('Error saving routine. Please try again.');
     }
-  };
+};
 
-const getTotalSets = () => {
+  const getTotalSets = () => {
     return Object.values(exerciseSets || {}).reduce((total, sets) => total + (Array.isArray(sets) ? sets.length : 0), 0);
   };
-
   const getCompletedSets = () => {
     return Object.values(exerciseSets || {}).reduce((total, sets) => 
       total + (Array.isArray(sets) ? sets.filter(set => set?.completed).length : 0), 0
@@ -242,9 +241,9 @@ const getTotalSets = () => {
                     <SetLogger
                       sets={exerciseSets[exercise.Id] || []}
                       onSetsChange={(sets) => handleSetsChange(exercise.Id, sets)}
-                      exerciseName={exercise.name}
+exerciseName={exercise.name}
                     />
-</motion.div>
+                  </motion.div>
                 ))}
               </AnimatePresence>
             </div>
@@ -293,7 +292,7 @@ const AISuggestionPanel = ({ selectedExercises, onExerciseSelect }) => {
       }
     };
 
-    loadSuggestions();
+loadSuggestions();
   }, [selectedExercises]);
 
   const handleAddExercise = (exercise) => {
@@ -400,9 +399,9 @@ const AISuggestionPanel = ({ selectedExercises, onExerciseSelect }) => {
             These suggestions are based on muscle group balance and complementary movement patterns.
           </p>
         </div>
-      </div>
+</div>
     </motion.div>
-);
+  );
 };
 
 export default RoutineBuilder;
