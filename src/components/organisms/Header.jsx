@@ -1,10 +1,18 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { NavLink } from 'react-router-dom';
 import ApperIcon from '@/components/ApperIcon';
 import MobileNav from './MobileNav';
 
 const Header = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  const navItems = [
+    { name: 'Dashboard', path: '/', icon: 'Home' },
+    { name: 'Muscle Map', path: '/muscle-map', icon: 'Target' },
+    { name: 'My Routine', path: '/routine', icon: 'Dumbbell' },
+    { name: 'Water Tracker', path: '/water', icon: 'Droplets' },
+  ];
 
   return (
     <>
@@ -32,6 +40,26 @@ const Header = () => {
                 </h1>
               </div>
             </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                      isActive
+                        ? 'bg-gradient-to-r from-primary to-blue-600 text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`
+                  }
+                >
+                  <ApperIcon name={item.icon} className="w-4 h-4" />
+                  <span className="font-medium">{item.name}</span>
+                </NavLink>
+              ))}
+            </nav>
 
             <div className="flex items-center space-x-4">
               <div className="hidden sm:flex items-center space-x-4 text-sm text-secondary">
