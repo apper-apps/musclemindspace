@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
-import ApperIcon from '@/components/ApperIcon';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
-import { waterService } from '@/services/api/waterService';
-
-const WaterTrackerPage = () => {
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import waterService from "@/services/api/waterService";
+  
+function WaterTrackerPage() {
   const [todayIntake, setTodayIntake] = useState(0);
   const [dailyGoal, setDailyGoal] = useState(2000);
   const [intakeHistory, setIntakeHistory] = useState([]);
