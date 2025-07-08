@@ -91,8 +91,9 @@ const ExerciseLibrary = ({
     }
   };
 
-  const getUniqueEquipment = () => {
-    const equipment = [...new Set(exercises.map(ex => ex.equipment))];
+const getUniqueEquipment = () => {
+    if (!Array.isArray(exercises) || exercises.length === 0) return [];
+    const equipment = [...new Set(exercises.map(ex => ex?.equipment).filter(Boolean))];
     return equipment.sort();
   };
 

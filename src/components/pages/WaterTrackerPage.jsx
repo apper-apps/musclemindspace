@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import ApperIcon from '@/components/ApperIcon';
 import Button from '@/components/atoms/Button';
 import Input from '@/components/atoms/Input';
-import waterService from '@/services/api/waterService';
+import { waterService } from '@/services/api/waterService';
 
 const WaterTrackerPage = () => {
   const [todayIntake, setTodayIntake] = useState(0);

@@ -10,6 +10,7 @@ import exercises from "@/services/mockData/exercises.json";
 import workouts from "@/services/mockData/workouts.json";
 import routines from "@/services/mockData/routines.json";
 import progress from "@/services/mockData/progress.json";
+import water from "@/services/mockData/water.json";
 import { exerciseService } from "@/services/api/exerciseService";
 import { routineService } from "@/services/api/routineService";
 
@@ -93,10 +94,10 @@ const RoutineBuilder = ({
       return;
     }
 
-    const routineData = {
+const routineData = {
       name: routineName,
-      exercises: selectedExercises,
-      targetMuscles: [...new Set(selectedExercises.flatMap(ex => ex.primaryMuscles))],
+      exercises: selectedExercises || [],
+      targetMuscles: [...new Set((selectedExercises || []).flatMap(ex => ex?.primaryMuscles || []))],
       createdAt: new Date().toISOString()
     };
 
@@ -113,13 +114,13 @@ const RoutineBuilder = ({
     }
   };
 
-  const getTotalSets = () => {
-    return Object.values(exerciseSets).reduce((total, sets) => total + sets.length, 0);
+const getTotalSets = () => {
+    return Object.values(exerciseSets || {}).reduce((total, sets) => total + (Array.isArray(sets) ? sets.length : 0), 0);
   };
 
   const getCompletedSets = () => {
-    return Object.values(exerciseSets).reduce((total, sets) => 
-      total + sets.filter(set => set.completed).length, 0
+    return Object.values(exerciseSets || {}).reduce((total, sets) => 
+      total + (Array.isArray(sets) ? sets.filter(set => set?.completed).length : 0), 0
     );
   };
 

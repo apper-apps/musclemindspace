@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Chart from 'react-apexcharts';
-import ProgressRing from '@/components/molecules/ProgressRing';
-import ApperIcon from '@/components/ApperIcon';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
-import FormField from '@/components/molecules/FormField';
-import Loading from '@/components/ui/Loading';
-import Error from '@/components/ui/Error';
-import { progressService } from '@/services/api/progressService';
-import { workoutService } from '@/services/api/workoutService';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Chart from "react-apexcharts";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import Dashboard from "@/components/pages/Dashboard";
+import ProgressRing from "@/components/molecules/ProgressRing";
+import FormField from "@/components/molecules/FormField";
+import { progressService } from "@/services/api/progressService";
+import { workoutService } from "@/services/api/workoutService";
 
 const ProgressDashboard = ({ className = "" }) => {
   const [progressData, setProgressData] = useState([]);
@@ -532,10 +533,11 @@ const getThisWeekWorkouts = () => {
                 <div className="photo-comparison-slider relative bg-gray-100 rounded-lg overflow-hidden">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                     {/* Before Photo */}
-                    <div className="photo-container">
+<div className="photo-container">
                       <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-<h4 className="font-semibold text-gray-900 mb-4">Before</h4>
-                      {entry.beforePhotoUrl ? (
+                        <h4 className="font-semibold text-gray-900 mb-4">Before</h4>
+                      </div>
+                      {entry?.beforePhotoUrl ? (
                         <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
                           <img
                             src={entry.beforePhotoUrl}
@@ -567,11 +569,11 @@ const getThisWeekWorkouts = () => {
                           </div>
                         </div>
                       )}
-                    </div>
+</div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-4">After</h4>
-                      {entry.afterPhotoUrl ? (
-<div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
+                      {entry?.afterPhotoUrl ? (
+                        <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
                           <img
                             src={entry.afterPhotoUrl}
                             alt="After progress photo"
@@ -608,7 +610,7 @@ const getThisWeekWorkouts = () => {
                     <p><strong>Weight:</strong> {entry.weight}lbs</p>
                     <p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
                   </div>
-                  </div>
+</div>
                   
                   {/* Comparison Stats */}
                   {entry.beforePhotoUrl && entry.afterPhotoUrl && (
@@ -616,15 +618,15 @@ const getThisWeekWorkouts = () => {
                       <div className="flex justify-center space-x-6 text-xs">
                         <div className="text-center">
                           <p className="font-medium text-gray-900">Chest</p>
-                          <p className="text-secondary">{entry.measurements.chest}"</p>
+                          <p className="text-secondary">{entry?.measurements?.chest || 0}"</p>
                         </div>
                         <div className="text-center">
                           <p className="font-medium text-gray-900">Waist</p>
-                          <p className="text-secondary">{entry.measurements.waist}"</p>
+                          <p className="text-secondary">{entry?.measurements?.waist || 0}"</p>
                         </div>
                         <div className="text-center">
                           <p className="font-medium text-gray-900">Arms</p>
-                          <p className="text-secondary">{entry.measurements.arms}"</p>
+                          <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
                         </div>
                       </div>
                     </div>

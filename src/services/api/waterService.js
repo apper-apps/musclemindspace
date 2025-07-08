@@ -1,7 +1,7 @@
 import waterData from '@/services/mockData/water.json';
 
-let data = [...waterData];
-let nextId = Math.max(...data.map(item => item.Id)) + 1;
+let data = Array.isArray(waterData) ? [...waterData] : [];
+let nextId = data.length > 0 ? Math.max(...data.map(item => item?.Id || 0)) + 1 : 1;
 
 // Helper to get today's date string
 const getTodayString = () => new Date().toDateString();
