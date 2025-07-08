@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 import MuscleGroup from '@/components/molecules/MuscleGroup';
+import MuscleInfoModal from '@/components/molecules/MuscleInfoModal';
 import ApperIcon from '@/components/ApperIcon';
 import Button from '@/components/atoms/Button';
-
+import { muscleInfoService } from '@/services/api/muscleInfoService';
 const MuscleMap = ({ onMuscleSelect, selectedMuscles = [], recoveryData = {}, showRecovery = false }) => {
   const [view, setView] = useState('front');
   const [muscles, setMuscles] = useState([]);
@@ -89,7 +91,13 @@ useEffect(() => {
     setMuscles(muscleData[view]);
   }, [view]);
 
-const handleMuscleClick = (muscleId) => {
+// Muscle info modal state
+  const [showMuscleInfo, setShowMuscleInfo] = useState(false);
+  const [selectedMuscleData, setSelectedMuscleData] = useState(null);
+  const [muscleInfoLoading, setMuscleInfoLoading] = useState(false);
+  const [muscleInfoError, setMuscleInfoError] = useState(null);
+
+  const handleMuscleClick = async (muscleId) => {
     const muscle = muscles.find(m => m.id === muscleId);
     if (muscle) {
       if (showRecovery) {
@@ -97,9 +105,42 @@ const handleMuscleClick = (muscleId) => {
         const recovery = recoveryData[muscle.name] || { intensity: 0, needsRest: false };
         // Could trigger a tooltip or info display
       } else {
+        // Add to selected muscles first
         onMuscleSelect(muscle.name);
+        toast.success(`${muscle.name} added to selected muscles!`, {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
+
+        // Then load and show muscle information
+        await loadMuscleInfo(muscle.name);
       }
     }
+  };
+
+  const loadMuscleInfo = async (muscleName) => {
+    setMuscleInfoLoading(true);
+    setMuscleInfoError(null);
+    setShowMuscleInfo(true);
+    
+    try {
+      const muscleData = await muscleInfoService.getMuscleWithExercises(muscleName);
+      setSelectedMuscleData(muscleData);
+    } catch (error) {
+      setMuscleInfoError(error.message);
+      toast.error(`Failed to load muscle information: ${error.message}`, {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setMuscleInfoLoading(false);
+    }
+  };
+
+  const closeMuscleInfo = () => {
+    setShowMuscleInfo(false);
+    setSelectedMuscleData(null);
+    setMuscleInfoError(null);
   };
 
   const clearSelection = () => {
@@ -269,7 +310,7 @@ const handleMuscleClick = (muscleId) => {
           <p className="text-sm text-secondary mb-4">
             {showRecovery 
               ? "View muscle recovery status - hover for details" 
-              : "Click on muscle groups to select them for your workout"
+              : "Click on muscle groups to select them and view detailed information"
             }
           </p>
           {selectedMuscles.length > 0 && (
@@ -280,7 +321,8 @@ const handleMuscleClick = (muscleId) => {
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="px-3 py-1 bg-gradient-to-r from-primary to-blue-600 text-white text-sm rounded-full"
+                    className="px-3 py-1 bg-gradient-to-r from-primary to-blue-600 text-white text-sm rounded-full cursor-pointer hover:from-primary hover:to-blue-700 transition-all"
+                    onClick={() => loadMuscleInfo(muscle)}
                   >
                     {muscle}
                   </motion.span>
@@ -297,6 +339,15 @@ const handleMuscleClick = (muscleId) => {
             </div>
           )}
         </div>
+
+        {/* Muscle Information Modal */}
+        <MuscleInfoModal
+          isOpen={showMuscleInfo}
+          onClose={closeMuscleInfo}
+          muscleData={selectedMuscleData}
+          loading={muscleInfoLoading}
+          error={muscleInfoError}
+        />
       </div>
     </div>
   );

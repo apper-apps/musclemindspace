@@ -1,0 +1,450 @@
+[
+  {
+    "Id": 1,
+    "name": "Chest (Pectorals)",
+    "description": "The pectoral muscles are responsible for pushing movements and arm adduction across the body.",
+    "primaryFunction": "Horizontal adduction, flexion, and internal rotation of the arm",
+    "exercises": [1, 14, 15, 23, 25],
+    "commonInjuries": [
+      {
+        "type": "Pectoral Strain",
+        "severity": "Moderate",
+        "symptoms": "Sharp pain during pushing movements, tenderness, possible bruising",
+        "prevention": "Proper warm-up, gradual progression, balanced training with pulling exercises"
+      },
+      {
+        "type": "Shoulder Impingement",
+        "severity": "Mild to Moderate",
+        "symptoms": "Pain when lifting arms overhead, weakness in shoulder",
+        "prevention": "Maintain good posture, strengthen rear deltoids, avoid overuse"
+      }
+    ],
+    "status": {
+      "strength": 85,
+      "flexibility": 70,
+      "recovery": 90,
+      "lastWorked": "2024-01-15"
+    },
+    "tips": [
+      "Focus on full range of motion during chest exercises",
+      "Balance pushing movements with pulling exercises",
+      "Incorporate both incline and decline angles for complete development"
+    ]
+  },
+  {
+    "Id": 2,
+    "name": "Shoulders (Deltoids)",
+    "description": "The deltoid muscles provide shoulder stability and enable a wide range of arm movements.",
+    "primaryFunction": "Shoulder abduction, flexion, and extension",
+    "exercises": [5, 10, 23, 25],
+    "commonInjuries": [
+      {
+        "type": "Rotator Cuff Injury",
+        "severity": "Moderate to Severe",
+        "symptoms": "Deep aching pain, weakness when lifting arm, night pain",
+        "prevention": "Strengthen rotator cuff muscles, avoid overhead repetitive motions, proper form"
+      },
+      {
+        "type": "Shoulder Bursitis",
+        "severity": "Mild to Moderate", 
+        "symptoms": "Pain and swelling in shoulder, limited range of motion",
+        "prevention": "Avoid repetitive overhead activities, maintain good posture"
+      }
+    ],
+    "status": {
+      "strength": 78,
+      "flexibility": 65,
+      "recovery": 85,
+      "lastWorked": "2024-01-14"
+    },
+    "tips": [
+      "Warm up thoroughly before shoulder workouts",
+      "Include rotator cuff strengthening exercises",
+      "Avoid excessive overhead pressing without proper progression"
+    ]
+  },
+  {
+    "Id": 3,
+    "name": "Biceps",
+    "description": "The biceps brachii muscles are responsible for elbow flexion and forearm supination.",
+    "primaryFunction": "Elbow flexion and forearm supination",
+    "exercises": [8, 4, 6],
+    "commonInjuries": [
+      {
+        "type": "Bicep Tendonitis",
+        "severity": "Mild to Moderate",
+        "symptoms": "Pain in front of shoulder, weakness in arm, aching sensation",
+        "prevention": "Avoid overuse, proper warm-up, gradual progression"
+      },
+      {
+        "type": "Bicep Strain",
+        "severity": "Mild",
+        "symptoms": "Sudden sharp pain, muscle spasm, tenderness",
+        "prevention": "Proper warm-up, don't lift beyond capacity, balanced training"
+      }
+    ],
+    "status": {
+      "strength": 72,
+      "flexibility": 80,
+      "recovery": 95,
+      "lastWorked": "2024-01-13"
+    },
+    "tips": [
+      "Use full range of motion for maximum muscle development",
+      "Don't neglect triceps training for balanced arm development",
+      "Focus on controlled movements rather than heavy weights"
+    ]
+  },
+  {
+    "Id": 4,
+    "name": "Forearms",
+    "description": "The forearm muscles control wrist and finger movements, providing grip strength.",
+    "primaryFunction": "Wrist flexion, extension, and grip strength",
+    "exercises": [8, 4, 6],
+    "commonInjuries": [
+      {
+        "type": "Tennis Elbow",
+        "severity": "Moderate",
+        "symptoms": "Pain on outside of elbow, weak grip strength, pain when lifting",
+        "prevention": "Proper grip technique, gradual progression, rest when needed"
+      },
+      {
+        "type": "Golfer's Elbow",
+        "severity": "Moderate",
+        "symptoms": "Pain on inside of elbow, stiffness, numbness in fingers",
+        "prevention": "Proper form, strengthen forearm muscles, adequate rest"
+      }
+    ],
+    "status": {
+      "strength": 68,
+      "flexibility": 75,
+      "recovery": 88,
+      "lastWorked": "2024-01-13"
+    },
+    "tips": [
+      "Include wrist curls and reverse curls in your routine",
+      "Use proper grip during all exercises",
+      "Don't neglect forearm stretching after workouts"
+    ]
+  },
+  {
+    "Id": 5,
+    "name": "Abs (Rectus Abdominis)",
+    "description": "The rectus abdominis provides core stability and enables trunk flexion.",
+    "primaryFunction": "Trunk flexion and core stabilization",
+    "exercises": [19, 20, 24],
+    "commonInjuries": [
+      {
+        "type": "Abdominal Strain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Sharp pain in abdomen, muscle spasm, difficulty moving",
+        "prevention": "Proper warm-up, gradual progression, avoid overexertion"
+      },
+      {
+        "type": "Lower Back Strain",
+        "severity": "Moderate",
+        "symptoms": "Lower back pain, stiffness, muscle spasms",
+        "prevention": "Strengthen core muscles, maintain proper form, balanced training"
+      }
+    ],
+    "status": {
+      "strength": 76,
+      "flexibility": 70,
+      "recovery": 82,
+      "lastWorked": "2024-01-16"
+    },
+    "tips": [
+      "Focus on quality over quantity for ab exercises",
+      "Include both static and dynamic core exercises",
+      "Breathe properly during core training"
+    ]
+  },
+  {
+    "Id": 6,
+    "name": "Quadriceps",
+    "description": "The quadriceps muscles are responsible for knee extension and hip flexion.",
+    "primaryFunction": "Knee extension and hip flexion",
+    "exercises": [2, 11, 21, 22],
+    "commonInjuries": [
+      {
+        "type": "Quadriceps Strain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Sudden sharp pain, muscle spasm, difficulty walking",
+        "prevention": "Proper warm-up, gradual progression, adequate rest"
+      },
+      {
+        "type": "Patellofemoral Pain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Knee pain, especially when squatting or climbing stairs",
+        "prevention": "Strengthen quads and glutes, proper form, avoid overuse"
+      }
+    ],
+    "status": {
+      "strength": 82,
+      "flexibility": 65,
+      "recovery": 75,
+      "lastWorked": "2024-01-15"
+    },
+    "tips": [
+      "Include both compound and isolation quad exercises",
+      "Don't neglect hamstring training for muscle balance",
+      "Focus on proper squat and lunge form"
+    ]
+  },
+  {
+    "Id": 7,
+    "name": "Calves",
+    "description": "The calf muscles provide propulsion during walking and running, and help maintain balance.",
+    "primaryFunction": "Plantar flexion and propulsion during movement",
+    "exercises": [13],
+    "commonInjuries": [
+      {
+        "type": "Calf Strain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Sudden sharp pain, muscle spasm, difficulty walking",
+        "prevention": "Proper warm-up, gradual progression, adequate stretching"
+      },
+      {
+        "type": "Achilles Tendonitis",
+        "severity": "Moderate",
+        "symptoms": "Pain and stiffness in Achilles tendon, swelling",
+        "prevention": "Gradual training progression, proper footwear, calf stretching"
+      }
+    ],
+    "status": {
+      "strength": 70,
+      "flexibility": 60,
+      "recovery": 90,
+      "lastWorked": "2024-01-14"
+    },
+    "tips": [
+      "Train calves with both seated and standing exercises",
+      "Use full range of motion for maximum development",
+      "Don't forget to stretch calves after training"
+    ]
+  },
+  {
+    "Id": 8,
+    "name": "Traps (Trapezius)",
+    "description": "The trapezius muscles support the neck and shoulders, enabling shoulder blade movement.",
+    "primaryFunction": "Shoulder blade elevation, retraction, and rotation",
+    "exercises": [16, 17],
+    "commonInjuries": [
+      {
+        "type": "Neck Strain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Neck pain, stiffness, limited range of motion",
+        "prevention": "Maintain good posture, avoid sudden movements, proper ergonomics"
+      },
+      {
+        "type": "Trapezius Spasm",
+        "severity": "Mild",
+        "symptoms": "Muscle spasm, pain, tension in upper back",
+        "prevention": "Regular stretching, stress management, proper posture"
+      }
+    ],
+    "status": {
+      "strength": 74,
+      "flexibility": 68,
+      "recovery": 85,
+      "lastWorked": "2024-01-12"
+    },
+    "tips": [
+      "Include both upper and lower trap exercises",
+      "Focus on posture correction exercises",
+      "Don't neglect neck stretching and mobility"
+    ]
+  },
+  {
+    "Id": 9,
+    "name": "Upper Back (Rhomboids)",
+    "description": "The rhomboid muscles help retract the shoulder blades and maintain proper posture.",
+    "primaryFunction": "Shoulder blade retraction and stabilization",
+    "exercises": [6, 4, 17],
+    "commonInjuries": [
+      {
+        "type": "Rhomboid Strain",
+        "severity": "Mild",
+        "symptoms": "Pain between shoulder blades, muscle spasm, limited mobility",
+        "prevention": "Strengthen upper back, improve posture, regular stretching"
+      },
+      {
+        "type": "Upper Cross Syndrome",
+        "severity": "Mild to Moderate",
+        "symptoms": "Forward head posture, rounded shoulders, upper back pain",
+        "prevention": "Strengthen rear delts and rhomboids, stretch chest and neck"
+      }
+    ],
+    "status": {
+      "strength": 71,
+      "flexibility": 72,
+      "recovery": 88,
+      "lastWorked": "2024-01-13"
+    },
+    "tips": [
+      "Focus on rowing movements for rhomboid development",
+      "Incorporate posture correction exercises",
+      "Balance pushing exercises with pulling movements"
+    ]
+  },
+  {
+    "Id": 10,
+    "name": "Lats (Latissimus Dorsi)",
+    "description": "The latissimus dorsi are large back muscles responsible for pulling movements.",
+    "primaryFunction": "Shoulder adduction, extension, and internal rotation",
+    "exercises": [4, 6],
+    "commonInjuries": [
+      {
+        "type": "Lat Strain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Pain in back and armpit area, limited shoulder mobility",
+        "prevention": "Proper warm-up, gradual progression, balanced training"
+      },
+      {
+        "type": "Shoulder Impingement",
+        "severity": "Moderate",
+        "symptoms": "Pain during overhead movements, weakness, clicking sounds",
+        "prevention": "Strengthen rotator cuff, improve shoulder mobility, proper form"
+      }
+    ],
+    "status": {
+      "strength": 79,
+      "flexibility": 66,
+      "recovery": 80,
+      "lastWorked": "2024-01-14"
+    },
+    "tips": [
+      "Include both vertical and horizontal pulling exercises",
+      "Focus on lat stretches for improved mobility",
+      "Use full range of motion for maximum development"
+    ]
+  },
+  {
+    "Id": 11,
+    "name": "Triceps",
+    "description": "The triceps muscles are responsible for elbow extension and assist in shoulder stability.",
+    "primaryFunction": "Elbow extension and shoulder stabilization",
+    "exercises": [7, 9, 1, 5],
+    "commonInjuries": [
+      {
+        "type": "Tricep Tendonitis",
+        "severity": "Mild to Moderate",
+        "symptoms": "Pain in back of elbow, weakness, aching sensation",
+        "prevention": "Proper warm-up, avoid overuse, gradual progression"
+      },
+      {
+        "type": "Elbow Bursitis",
+        "severity": "Mild",
+        "symptoms": "Swelling in elbow, pain, limited range of motion",
+        "prevention": "Avoid repetitive pressure on elbow, proper form"
+      }
+    ],
+    "status": {
+      "strength": 73,
+      "flexibility": 75,
+      "recovery": 92,
+      "lastWorked": "2024-01-15"
+    },
+    "tips": [
+      "Include both overhead and behind-the-back tricep exercises",
+      "Don't neglect tricep stretching after workouts",
+      "Balance tricep training with bicep development"
+    ]
+  },
+  {
+    "Id": 12,
+    "name": "Lower Back (Erector Spinae)",
+    "description": "The erector spinae muscles support the spine and enable back extension.",
+    "primaryFunction": "Spinal extension and stabilization",
+    "exercises": [3, 2],
+    "commonInjuries": [
+      {
+        "type": "Lower Back Strain",
+        "severity": "Moderate to Severe",
+        "symptoms": "Sharp pain in lower back, muscle spasms, limited mobility",
+        "prevention": "Strengthen core, proper lifting technique, maintain flexibility"
+      },
+      {
+        "type": "Disc Herniation",
+        "severity": "Severe",
+        "symptoms": "Radiating pain, numbness, weakness in legs",
+        "prevention": "Proper form, avoid heavy lifting with poor technique, core strengthening"
+      }
+    ],
+    "status": {
+      "strength": 69,
+      "flexibility": 58,
+      "recovery": 70,
+      "lastWorked": "2024-01-16"
+    },
+    "tips": [
+      "Focus on proper deadlift and squat form",
+      "Include lower back stretches in your routine",
+      "Strengthen your core to support the lower back"
+    ]
+  },
+  {
+    "Id": 13,
+    "name": "Glutes (Gluteus Maximus)",
+    "description": "The gluteus maximus is the largest muscle in the body, responsible for hip extension and stability.",
+    "primaryFunction": "Hip extension, external rotation, and stabilization",
+    "exercises": [18, 2, 3, 21],
+    "commonInjuries": [
+      {
+        "type": "Gluteal Strain",
+        "severity": "Mild to Moderate",
+        "symptoms": "Pain in buttocks, difficulty sitting, muscle spasm",
+        "prevention": "Proper warm-up, gradual progression, hip mobility work"
+      },
+      {
+        "type": "Piriformis Syndrome",
+        "severity": "Moderate",
+        "symptoms": "Deep buttock pain, sciatic-like symptoms, numbness",
+        "prevention": "Hip stretching, strengthen glutes, avoid prolonged sitting"
+      }
+    ],
+    "status": {
+      "strength": 81,
+      "flexibility": 62,
+      "recovery": 78,
+      "lastWorked": "2024-01-15"
+    },
+    "tips": [
+      "Include both bilateral and unilateral glute exercises",
+      "Focus on activating glutes before leg workouts",
+      "Don't neglect hip mobility and stretching"
+    ]
+  },
+  {
+    "Id": 14,
+    "name": "Hamstrings",
+    "description": "The hamstring muscles enable knee flexion and hip extension, working as stabilizers during movement.",
+    "primaryFunction": "Knee flexion and hip extension",
+    "exercises": [3, 12, 18],
+    "commonInjuries": [
+      {
+        "type": "Hamstring Strain",
+        "severity": "Mild to Severe",
+        "symptoms": "Sudden sharp pain, muscle spasm, difficulty walking",
+        "prevention": "Proper warm-up, maintain hamstring flexibility, balanced training"
+      },
+      {
+        "type": "Hamstring Tendonitis",
+        "severity": "Moderate",
+        "symptoms": "Pain in back of thigh, stiffness, aching sensation",
+        "prevention": "Gradual progression, proper stretching, avoid overuse"
+      }
+    ],
+    "status": {
+      "strength": 77,
+      "flexibility": 64,
+      "recovery": 83,
+      "lastWorked": "2024-01-16"
+    },
+    "tips": [
+      "Include both knee flexion and hip extension exercises",
+      "Maintain good hamstring flexibility with regular stretching",
+      "Balance quadriceps and hamstring strength ratios"
+    ]
+  }
+]
