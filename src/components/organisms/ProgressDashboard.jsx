@@ -693,126 +693,15 @@ const getThisWeekWorkouts = () => {
                           {Math.round(data.intensity * 100)}% intensity
                         </p>
                       </div>
-                    </motion.div>
+</motion.div>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       )}
-                <h5 className="font-medium text-gray-700">Recovery Heat Map</h5>
-                <div className="recovery-muscle-map bg-gray-50 rounded-lg p-4">
-                  <svg width="200" height="300" viewBox="0 0 200 300" className="mx-auto">
-                    <defs>
-                      <linearGradient id="recoveryLow" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#22C55E" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#16A34A" stopOpacity="0.3" />
-                      </linearGradient>
-                      <linearGradient id="recoveryMedium" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.6" />
-                        <stop offset="100%" stopColor="#D97706" stopOpacity="0.6" />
-                      </linearGradient>
-                      <linearGradient id="recoveryHigh" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#EF4444" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#DC2626" stopOpacity="0.8" />
-                      </linearGradient>
-                    </defs>
-                    
-                    {/* Simplified muscle regions with recovery colors */}
-                    <rect x="80" y="40" width="40" height="30" rx="5" 
-                          fill={muscleRecoveryData.Chest?.intensity > 0.6 ? "url(#recoveryHigh)" : 
-                                muscleRecoveryData.Chest?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
-                          className="muscle-recovery-region" />
-                    <text x="100" y="58" textAnchor="middle" className="text-xs font-medium">Chest</text>
-                    
-                    <rect x="60" y="25" width="25" height="20" rx="3"
-                          fill={muscleRecoveryData.Shoulders?.intensity > 0.6 ? "url(#recoveryHigh)" : 
-                                muscleRecoveryData.Shoulders?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
-                          className="muscle-recovery-region" />
-                    <rect x="115" y="25" width="25" height="20" rx="3"
-                          fill={muscleRecoveryData.Shoulders?.intensity > 0.6 ? "url(#recoveryHigh)" : 
-                                muscleRecoveryData.Shoulders?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
-                          className="muscle-recovery-region" />
-                    <text x="100" y="38" textAnchor="middle" className="text-xs font-medium">Shoulders</text>
-                    
-                    <rect x="85" y="80" width="30" height="40" rx="5"
-                          fill={muscleRecoveryData.Abs?.intensity > 0.6 ? "url(#recoveryHigh)" : 
-                                muscleRecoveryData.Abs?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
-                          className="muscle-recovery-region" />
-                    <text x="100" y="103" textAnchor="middle" className="text-xs font-medium">Abs</text>
-                    
-                    <rect x="75" y="140" width="50" height="50" rx="8"
-                          fill={muscleRecoveryData.Quadriceps?.intensity > 0.6 ? "url(#recoveryHigh)" : 
-                                muscleRecoveryData.Quadriceps?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
-                          className="muscle-recovery-region" />
-                    <text x="100" y="168" textAnchor="middle" className="text-xs font-medium">Quads</text>
-                    
-                    <rect x="85" y="210" width="30" height="40" rx="5"
-                          fill={muscleRecoveryData.Calves?.intensity > 0.6 ? "url(#recoveryHigh)" : 
-                                muscleRecoveryData.Calves?.intensity > 0.3 ? "url(#recoveryMedium)" : "url(#recoveryLow)"} 
-                          className="muscle-recovery-region" />
-                    <text x="100" y="233" textAnchor="middle" className="text-xs font-medium">Calves</text>
-                  </svg>
-                </div>
-                
-                <div className="recovery-legend flex items-center justify-center space-x-4 text-sm">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 rounded bg-green-400 opacity-30"></div>
-                    <span className="text-gray-600">Recovered</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 rounded bg-amber-400 opacity-60"></div>
-                    <span className="text-gray-600">Moderate</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 rounded bg-red-400 opacity-80"></div>
-                    <span className="text-gray-600">Needs Rest</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <h5 className="font-medium text-gray-700">Recovery Details</h5>
-                <div className="space-y-3 max-h-80 overflow-y-auto">
-                  {Object.entries(muscleRecoveryData).map(([muscle, data]) => (
-                    <motion.div
-                      key={muscle}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-3 h-3 rounded-full ${
-                          data.intensity > 0.6 ? 'bg-red-500' :
-                          data.intensity > 0.3 ? 'bg-amber-500' : 'bg-green-500'
-                        }`}></div>
-                        <div>
-                          <p className="font-medium text-gray-900">{muscle}</p>
-                          <p className="text-xs text-gray-500">
-                            {data.lastWorked ? 
-                              `Last worked: ${Math.floor((new Date() - data.lastWorked) / (1000 * 60 * 60 * 24))} days ago` : 
-                              'Not recently worked'
-                            }
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-medium text-gray-700">
-                          {data.needsRest ? 'Rest' : 'Ready'}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {Math.round(data.intensity * 100)}% intensity
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </div>
+      {/* Quick Stats */}
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <motion.div
