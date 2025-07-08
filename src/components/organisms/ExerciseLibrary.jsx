@@ -43,46 +43,55 @@ const ExerciseLibrary = ({
     }
   };
 
-  const filterExercises = () => {
+const filterExercises = () => {
+    // Ensure exercises is a valid array before filtering
+    if (!Array.isArray(exercises) || exercises.length === 0) {
+      setFilteredExercises([]);
+      return;
+    }
+    
     let filtered = exercises;
 
     // Filter by selected muscles
-    if (selectedMuscles.length > 0) {
+    if (Array.isArray(selectedMuscles) && selectedMuscles.length > 0) {
       filtered = filtered.filter(exercise =>
-        exercise.primaryMuscles.some(muscle =>
-          selectedMuscles.includes(muscle)
-        ) ||
-        exercise.secondaryMuscles.some(muscle =>
-          selectedMuscles.includes(muscle)
-        )
+        (Array.isArray(exercise?.primaryMuscles) && 
+         exercise.primaryMuscles.some(muscle =>
+           selectedMuscles.includes(muscle)
+         )) ||
+        (Array.isArray(exercise?.secondaryMuscles) && 
+         exercise.secondaryMuscles.some(muscle =>
+           selectedMuscles.includes(muscle)
+         ))
       );
     }
 
     // Filter by search term
-    if (searchTerm) {
+    if (searchTerm && typeof searchTerm === 'string') {
       filtered = filtered.filter(exercise =>
-        exercise.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        exercise.primaryMuscles.some(muscle =>
-          muscle.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        exercise?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (Array.isArray(exercise?.primaryMuscles) && 
+         exercise.primaryMuscles.some(muscle =>
+           muscle?.toLowerCase().includes(searchTerm.toLowerCase())
+         ))
       );
     }
 
     // Filter by equipment
-    if (equipmentFilter !== 'all') {
+    if (equipmentFilter !== 'all' && typeof equipmentFilter === 'string') {
       filtered = filtered.filter(exercise =>
-        exercise.equipment.toLowerCase() === equipmentFilter.toLowerCase()
+        exercise?.equipment?.toLowerCase() === equipmentFilter.toLowerCase()
       );
     }
 
     // Filter by difficulty
-    if (difficultyFilter !== 'all') {
+    if (difficultyFilter !== 'all' && !isNaN(parseInt(difficultyFilter))) {
       filtered = filtered.filter(exercise =>
-        exercise.difficulty === parseInt(difficultyFilter)
+        exercise?.difficulty === parseInt(difficultyFilter)
       );
     }
 
-    setFilteredExercises(filtered);
+    setFilteredExercises(Array.isArray(filtered) ? filtered : []);
   };
 
   const handleExerciseSelect = (exercise) => {
@@ -93,8 +102,19 @@ const ExerciseLibrary = ({
 
 const getUniqueEquipment = () => {
     if (!Array.isArray(exercises) || exercises.length === 0) return [];
-    const equipment = [...new Set(exercises.map(ex => ex?.equipment).filter(Boolean))];
-    return equipment.sort();
+    
+    try {
+      const equipment = [...new Set(
+        exercises
+          .map(ex => ex?.equipment)
+          .filter(Boolean)
+          .filter(eq => typeof eq === 'string')
+      )];
+      return equipment.sort();
+    } catch (error) {
+      console.warn('Error getting unique equipment:', error);
+      return [];
+    }
   };
 
   if (loading) return <Loading />;

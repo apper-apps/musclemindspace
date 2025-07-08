@@ -1,4 +1,4 @@
-import exerciseData from '@/services/mockData/exercises.json';
+import exerciseData from "@/services/mockData/exercises.json";
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -148,15 +148,57 @@ export const exerciseService = {
       if (score > 0 && reasons.length > 0) {
         suggestions.push({
           exercise: { ...exercise },
-          score: Math.min(Math.round(score), 95),
+score: Math.min(Math.round(score), 95),
           reason: reasons[0] // Use the most important reason
         });
       }
     });
 
-    // Sort by score and return top 3
+    // Return top suggestions sorted by score
     return suggestions
       .sort((a, b) => b.score - a.score)
-      .slice(0, 3);
+      .slice(0, 5);
+  },
+
+  async searchExercises(query) {
+    await delay(300);
+    
+    // Ensure exerciseData is valid before filtering
+    if (!Array.isArray(exerciseData) || exerciseData.length === 0) {
+      return [];
+    }
+    
+    if (!query || query.trim() === '') {
+      return [];
+    }
+    
+    const queryLower = query.toLowerCase();
+    const results = exerciseData.filter(exercise =>
+      exercise?.name?.toLowerCase().includes(queryLower) ||
+      exercise?.primaryMuscles?.some(muscle => 
+        muscle?.toLowerCase().includes(queryLower)
+      ) ||
+      exercise?.secondaryMuscles?.some(muscle => 
+        muscle?.toLowerCase().includes(queryLower)
+      ) ||
+      exercise?.equipment?.toLowerCase().includes(queryLower)
+    );
+    
+    return results.map(ex => ({ ...ex }));
+  },
+
+  async getExercisesByMuscle(muscleGroup) {
+    await delay(200);
+    
+    if (!muscleGroup) {
+      return [];
+    }
+    
+    const results = exerciseData.filter(exercise =>
+      exercise?.primaryMuscles?.includes(muscleGroup) ||
+      exercise?.secondaryMuscles?.includes(muscleGroup)
+    );
+    
+    return results.map(ex => ({ ...ex }));
   }
 };
