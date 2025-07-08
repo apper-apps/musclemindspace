@@ -39,6 +39,7 @@ const [newProgress, setNewProgress] = useState({
     beforePhoto: null,
     afterPhoto: null
   });
+  const [activeMetric, setActiveMetric] = useState('weight');
 
   useEffect(() => {
     loadDashboardData();
@@ -502,28 +503,30 @@ const getThisWeekWorkouts = () => {
       const daysSince = Math.floor((now - workoutDate) / (1000 * 60 * 60 * 24));
       
       if (daysSince <= 7) { // Only consider workouts from last week
-        workout.exercises.forEach(exercise => {
-          const musclesWorked = muscleGroupMapping[exercise.name] || [];
-          
-          musclesWorked.forEach(muscle => {
-            if (recoveryData[muscle]) {
-              // Higher intensity for more recent workouts
-              const workoutIntensity = Math.max(0, 1 - (daysSince / 7));
-              recoveryData[muscle].intensity = Math.min(1, 
-                recoveryData[muscle].intensity + workoutIntensity * 0.3
-              );
-              
-              if (!recoveryData[muscle].lastWorked || workoutDate > recoveryData[muscle].lastWorked) {
-                recoveryData[muscle].lastWorked = workoutDate;
+        if (workout.exercises) {
+          workout.exercises.forEach(exercise => {
+            const musclesWorked = muscleGroupMapping[exercise.name] || [];
+            
+            musclesWorked.forEach(muscle => {
+              if (recoveryData[muscle]) {
+                // Higher intensity for more recent workouts
+                const workoutIntensity = Math.max(0, 1 - (daysSince / 7));
+                recoveryData[muscle].intensity = Math.min(1, 
+                  recoveryData[muscle].intensity + workoutIntensity * 0.3
+                );
+                
+                if (!recoveryData[muscle].lastWorked || workoutDate > recoveryData[muscle].lastWorked) {
+                  recoveryData[muscle].lastWorked = workoutDate;
+                }
+                
+                // Mark as needing rest if worked within 48 hours
+                if (daysSince < 2) {
+                  recoveryData[muscle].needsRest = true;
+                }
               }
-              
-              // Mark as needing rest if worked within 48 hours
-              if (daysSince < 2) {
-                recoveryData[muscle].needsRest = true;
-              }
-            }
+            });
           });
-        });
+        }
       }
     });
 
@@ -751,27 +754,8 @@ const getThisWeekWorkouts = () => {
           )}
         </div>
       )}
-      {/* Quick Stats */}
-      {/* Quick Stats */}
+{/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <motion.div
-          whileHover={{ y: -2 }}
-          className="metric-card bg-white rounded-lg p-6 shadow-md"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-secondary">This Week</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {thisWeekWorkouts.length}
-              </p>
-              <p className="text-xs text-accent">Workouts</p>
-            </div>
-            <div className="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center">
-              <ApperIcon name="Activity" className="w-6 h-6 text-white" />
-            </div>
-          </div>
-        </motion.div>
-
         <motion.div
           whileHover={{ y: -2 }}
           className="metric-card bg-white rounded-lg p-6 shadow-md"
@@ -780,12 +764,15 @@ const getThisWeekWorkouts = () => {
             <div>
               <p className="text-sm text-secondary">Current Weight</p>
               <p className="text-2xl font-bold text-gray-900">
-                {stats?.current?.weight || 0}
+                {stats?.current?.weight || 0} lbs
               </p>
-              <p className="text-xs text-accent">lbs</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {stats?.weightChange ? 
+                  (stats.weightChange > 0 ? '+' : '') + stats.weightChange.toFixed(1) : '0'} lbs change
+              </p>
             </div>
-            <div className="w-12 h-12 bg-gradient-to-br from-accent to-emerald-600 rounded-full flex items-center justify-center">
-              <ApperIcon name="TrendingUp" className="w-6 h-6 text-white" />
+            <div className="p-3 bg-primary bg-opacity-10 rounded-full">
+              <ApperIcon name="TrendingUp" className="w-6 h-6 text-primary" />
             </div>
           </div>
         </motion.div>
@@ -796,68 +783,138 @@ const getThisWeekWorkouts = () => {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-secondary">Total Workouts</p>
+              <p className="text-sm text-secondary">This Week</p>
               <p className="text-2xl font-bold text-gray-900">
-                {workoutHistory.length}
+                {thisWeekWorkouts.length} workouts
               </p>
-              <p className="text-xs text-accent">Completed</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {Math.round((thisWeekWorkouts.length / 5) * 100)}% of goal
+              </p>
             </div>
-            <div className="w-12 h-12 bg-gradient-to-br from-secondary to-slate-600 rounded-full flex items-center justify-center">
-              <ApperIcon name="Target" className="w-6 h-6 text-white" />
+            <div className="p-3 bg-green-100 rounded-full">
+              <ApperIcon name="Activity" className="w-6 h-6 text-green-600" />
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          whileHover={{ y: -2 }}
+          className="metric-card bg-white rounded-lg p-6 shadow-md"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-secondary">Progress Entries</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {progressData.length}
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                Total logged
+              </p>
+            </div>
+            <div className="p-3 bg-blue-100 rounded-full">
+              <ApperIcon name="BarChart" className="w-6 h-6 text-blue-600" />
             </div>
           </div>
         </motion.div>
       </div>
 
-{/* Chart Controls */}
+      {/* Chart Controls */}
       <div className="bg-white rounded-lg p-6 shadow-md">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <h3 className="text-lg font-display font-semibold text-gray-900">
-            Detailed Progress Charts
-          </h3>
-          <div className="flex flex-col sm:flex-row gap-4">
-            {/* Date Range Filter */}
-            <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700">Time Range:</label>
-              <select
-                value={selectedDateRange}
-                onChange={(e) => setSelectedDateRange(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary"
-              >
-                <option value="1month">Last Month</option>
-                <option value="3months">Last 3 Months</option>
-                <option value="6months">Last 6 Months</option>
-                <option value="1year">Last Year</option>
-                <option value="all">All Time</option>
-              </select>
-            </div>
-            
-            {/* Metric Selection */}
-            <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700">Measurements:</label>
-              <div className="flex space-x-2">
-                {['chest', 'waist', 'arms', 'thighs'].map(metric => (
-                  <button
-                    key={metric}
-                    onClick={() => {
-                      setSelectedMetrics(prev => 
-                        prev.includes(metric) 
-                          ? prev.filter(m => m !== metric)
-                          : [...prev, metric]
-                      );
-                    }}
-                    className={`px-2 py-1 text-xs rounded-md border transition-colors ${
-                      selectedMetrics.includes(metric)
-                        ? 'bg-primary text-white border-primary'
-                        : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    {metric.charAt(0).toUpperCase() + metric.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="font-display font-semibold text-gray-900">
+            Progress Charts
+          </h4>
+          <div className="flex items-center space-x-2">
+            <select
+              value={selectedDateRange}
+              onChange={(e) => setSelectedDateRange(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <option value="1month">Last Month</option>
+              <option value="3months">Last 3 Months</option>
+              <option value="6months">Last 6 Months</option>
+              <option value="1year">Last Year</option>
+              <option value="all">All Time</option>
+            </select>
           </div>
+        </div>
+
+        <div className="flex items-center space-x-4 mb-6">
+          {['weight', 'measurements', 'workouts'].map((metric) => (
+            <button
+              key={metric}
+              onClick={() => setActiveMetric(metric)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeMetric === metric
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {metric.charAt(0).toUpperCase() + metric.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        <div className="chart-container" style={{ minHeight: '300px' }}>
+          {activeMetric === 'weight' && (
+            <div className="h-80">
+              {(() => {
+                const chartData = getWeightChartData();
+                return chartData && chartData.series && chartData.series.length > 0 ? (
+                  <Chart
+                    options={chartData.options}
+                    series={chartData.series}
+                    type="line"
+                    height="100%"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    <p>No weight data available</p>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+
+          {activeMetric === 'measurements' && (
+            <div className="h-80">
+              {(() => {
+                const chartData = getBodyMeasurementsChartData();
+                return chartData && chartData.series && chartData.series.length > 0 ? (
+                  <Chart
+                    options={chartData.options}
+                    series={chartData.series}
+                    type="line"
+                    height="100%"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    <p>No measurement data available</p>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+
+          {activeMetric === 'workouts' && (
+            <div className="h-80">
+              {(() => {
+                const chartData = getWorkoutFrequencyChartData();
+                return chartData && chartData.series && chartData.series.length > 0 ? (
+                  <Chart
+                    options={chartData.options}
+                    series={chartData.series}
+                    type="bar"
+                    height="100%"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    <p>No workout data available</p>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
         </div>
       </div>
 
@@ -902,103 +959,9 @@ const getThisWeekWorkouts = () => {
         </div>
       )}
 
-      {/* Progress Charts */}
+{/* Weekly Progress Ring */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {/* Weight Chart */}
-        <div className="bg-white rounded-lg p-6 shadow-md">
-<div className="flex items-center justify-between mb-4">
-            <h4 className="font-display font-semibold text-gray-900">
-              Weight Progress
-            </h4>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <ApperIcon name="TrendingUp" className="w-4 h-4" />
-              <span>Weight tracking</span>
-            </div>
-          </div>
-          <div className="chart-container" style={{ minHeight: '300px', width: '100%' }}>
-            {(() => {
-              const chartData = getWeightChartData();
-              return chartData && chartData.series && chartData.series.length > 0 ? (
-                <Chart
-                  options={chartData.options}
-                  series={chartData.series}
-                  type="line"
-                  height={300}
-                  width="100%"
-                />
-              ) : (
-                <div className="flex items-center justify-center h-64 text-gray-500">
-                  <p>No weight data available</p>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-
-        {/* Body Measurements Chart */}
-        <div className="bg-white rounded-lg p-6 shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="font-display font-semibold text-gray-900">
-              Body Measurements
-            </h4>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <ApperIcon name="Activity" className="w-4 h-4" />
-              <span>Selected metrics</span>
-            </div>
-          </div>
-          <div className="chart-container" style={{ minHeight: '300px', width: '100%' }}>
-            {(() => {
-              const chartData = getBodyMeasurementsChartData();
-              return chartData && chartData.series && chartData.series.length > 0 ? (
-                <Chart
-                  options={chartData.options}
-                  series={chartData.series}
-                  type="line"
-                  height={300}
-                  width="100%"
-                />
-              ) : (
-                <div className="flex items-center justify-center h-64 text-gray-500">
-                  <p>No measurement data available</p>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-
-        {/* Workout Frequency Chart */}
-        <div className="bg-white rounded-lg p-6 shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="font-display font-semibold text-gray-900">
-              Workout Frequency
-            </h4>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <ApperIcon name="BarChart" className="w-4 h-4" />
-              <span>Weekly breakdown</span>
-            </div>
-          </div>
-          <div className="chart-container" style={{ minHeight: '300px', width: '100%' }}>
-            {(() => {
-              const chartData = getWorkoutFrequencyChartData();
-              return chartData && chartData.series && chartData.series.length > 0 ? (
-                <Chart
-                  options={chartData.options}
-                  series={chartData.series}
-                  type="column"
-                  height={300}
-                  width="100%"
-                />
-              ) : (
-                <div className="flex items-center justify-center h-64 text-gray-500">
-                  <p>No workout frequency data available</p>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-
-        {/* Weekly Progress Ring */}
-        <div className="bg-white rounded-lg p-6 shadow-md">
+<div className="bg-white rounded-lg p-6 shadow-md">
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-display font-semibold text-gray-900">
               Weekly Goal Progress
@@ -1033,6 +996,26 @@ const getThisWeekWorkouts = () => {
                 : `${5 - thisWeekWorkouts.length} more workout${5 - thisWeekWorkouts.length !== 1 ? 's' : ''} to reach your goal`
               }
             </p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <h4 className="font-display font-semibold text-gray-900 mb-4">
+            Progress Summary
+          </h4>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Total Progress Entries</span>
+              <span className="font-semibold">{progressData.length}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Workouts This Week</span>
+              <span className="font-semibold">{thisWeekWorkouts.length}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-600">Current Weight</span>
+              <span className="font-semibold">{stats?.current?.weight || 0} lbs</span>
+            </div>
           </div>
         </div>
       </div>
