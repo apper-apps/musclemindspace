@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 1,
+    "date": "2024-01-01T00:00:00Z",
+    "weight": 180,
+    "measurements": {
+      "chest": 42,
+      "waist": 34,
+      "arms": 15,
+      "thighs": 24
+    },
+    "photoUrl": null
+  },
+  {
+    "Id": 2,
+    "date": "2024-01-08T00:00:00Z",
+    "weight": 179,
+    "measurements": {
+      "chest": 42.5,
+      "waist": 33.5,
+      "arms": 15.2,
+      "thighs": 24.2
+    },
+    "photoUrl": null
+  },
+  {
+    "Id": 3,
+    "date": "2024-01-15T00:00:00Z",
+    "weight": 178,
+    "measurements": {
+      "chest": 43,
+      "waist": 33,
+      "arms": 15.5,
+      "thighs": 24.5
+    },
+    "photoUrl": null
+  },
+  {
+    "Id": 4,
+    "date": "2024-01-22T00:00:00Z",
+    "weight": 177,
+    "measurements": {
+      "chest": 43.2,
+      "waist": 32.8,
+      "arms": 15.8,
+      "thighs": 24.8
+    },
+    "photoUrl": null
+  },
+  {
+    "Id": 5,
+    "date": "2024-01-29T00:00:00Z",
+    "weight": 176,
+    "measurements": {
+      "chest": 43.5,
+      "waist": 32.5,
+      "arms": 16,
+      "thighs": 25
+    },
+    "photoUrl": null
+  }
+]

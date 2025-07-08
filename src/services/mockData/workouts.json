@@ -1,0 +1,114 @@
+[
+  {
+    "Id": 1,
+    "name": "Upper Body Strength",
+    "date": "2024-01-20T18:00:00Z",
+    "duration": 45,
+    "exercises": [
+      {
+        "exerciseId": 1,
+        "name": "Bench Press",
+        "sets": [
+          { "reps": 10, "weight": 135, "completed": true },
+          { "reps": 8, "weight": 155, "completed": true },
+          { "reps": 6, "weight": 175, "completed": true }
+        ]
+      },
+      {
+        "exerciseId": 4,
+        "name": "Pull-ups",
+        "sets": [
+          { "reps": 8, "weight": 0, "completed": true },
+          { "reps": 6, "weight": 0, "completed": true },
+          { "reps": 5, "weight": 0, "completed": true }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "name": "Lower Body Power",
+    "date": "2024-01-18T17:30:00Z",
+    "duration": 50,
+    "exercises": [
+      {
+        "exerciseId": 2,
+        "name": "Squats",
+        "sets": [
+          { "reps": 12, "weight": 135, "completed": true },
+          { "reps": 10, "weight": 155, "completed": true },
+          { "reps": 8, "weight": 185, "completed": true }
+        ]
+      },
+      {
+        "exerciseId": 3,
+        "name": "Deadlifts",
+        "sets": [
+          { "reps": 8, "weight": 225, "completed": true },
+          { "reps": 6, "weight": 245, "completed": true },
+          { "reps": 4, "weight": 275, "completed": true }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "name": "Full Body Beginner",
+    "date": "2024-01-16T16:00:00Z",
+    "duration": 30,
+    "exercises": [
+      {
+        "exerciseId": 23,
+        "name": "Push-ups",
+        "sets": [
+          { "reps": 15, "weight": 0, "completed": true },
+          { "reps": 12, "weight": 0, "completed": true },
+          { "reps": 10, "weight": 0, "completed": true }
+        ]
+      },
+      {
+        "exerciseId": 21,
+        "name": "Lunges",
+        "sets": [
+          { "reps": 20, "weight": 0, "completed": true },
+          { "reps": 18, "weight": 0, "completed": true },
+          { "reps": 15, "weight": 0, "completed": true }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "name": "Upper Body Strength",
+    "date": "2024-01-22T19:00:00Z",
+    "duration": 48,
+    "exercises": [
+      {
+        "exerciseId": 1,
+        "name": "Bench Press",
+        "sets": [
+          { "reps": 10, "weight": 135, "completed": true },
+          { "reps": 8, "weight": 155, "completed": true },
+          { "reps": 6, "weight": 175, "completed": true }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "name": "Lower Body Power",
+    "date": "2024-01-24T17:00:00Z",
+    "duration": 55,
+    "exercises": [
+      {
+        "exerciseId": 2,
+        "name": "Squats",
+        "sets": [
+          { "reps": 12, "weight": 135, "completed": true },
+          { "reps": 10, "weight": 155, "completed": true },
+          { "reps": 8, "weight": 185, "completed": true }
+        ]
+      }
+    ]
+  }
+]

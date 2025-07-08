@@ -1,0 +1,202 @@
+[
+  {
+    "Id": 1,
+    "name": "Bench Press",
+    "primaryMuscles": ["Chest"],
+    "secondaryMuscles": ["Shoulders", "Triceps"],
+    "equipment": "Barbell",
+    "difficulty": 3
+  },
+  {
+    "Id": 2,
+    "name": "Squats",
+    "primaryMuscles": ["Quadriceps"],
+    "secondaryMuscles": ["Glutes", "Hamstrings"],
+    "equipment": "Barbell",
+    "difficulty": 3
+  },
+  {
+    "Id": 3,
+    "name": "Deadlifts",
+    "primaryMuscles": ["Hamstrings"],
+    "secondaryMuscles": ["Glutes", "Lats"],
+    "equipment": "Barbell",
+    "difficulty": 4
+  },
+  {
+    "Id": 4,
+    "name": "Pull-ups",
+    "primaryMuscles": ["Lats"],
+    "secondaryMuscles": ["Biceps", "Shoulders"],
+    "equipment": "Bodyweight",
+    "difficulty": 4
+  },
+  {
+    "Id": 5,
+    "name": "Overhead Press",
+    "primaryMuscles": ["Shoulders"],
+    "secondaryMuscles": ["Triceps", "Chest"],
+    "equipment": "Barbell",
+    "difficulty": 3
+  },
+  {
+    "Id": 6,
+    "name": "Barbell Rows",
+    "primaryMuscles": ["Lats"],
+    "secondaryMuscles": ["Biceps", "Shoulders"],
+    "equipment": "Barbell",
+    "difficulty": 3
+  },
+  {
+    "Id": 7,
+    "name": "Dips",
+    "primaryMuscles": ["Triceps"],
+    "secondaryMuscles": ["Chest", "Shoulders"],
+    "equipment": "Bodyweight",
+    "difficulty": 3
+  },
+  {
+    "Id": 8,
+    "name": "Bicep Curls",
+    "primaryMuscles": ["Biceps"],
+    "secondaryMuscles": [],
+    "equipment": "Dumbbells",
+    "difficulty": 2
+  },
+  {
+    "Id": 9,
+    "name": "Tricep Extensions",
+    "primaryMuscles": ["Triceps"],
+    "secondaryMuscles": [],
+    "equipment": "Dumbbells",
+    "difficulty": 2
+  },
+  {
+    "Id": 10,
+    "name": "Lateral Raises",
+    "primaryMuscles": ["Shoulders"],
+    "secondaryMuscles": [],
+    "equipment": "Dumbbells",
+    "difficulty": 2
+  },
+  {
+    "Id": 11,
+    "name": "Leg Press",
+    "primaryMuscles": ["Quadriceps"],
+    "secondaryMuscles": ["Glutes"],
+    "equipment": "Machine",
+    "difficulty": 2
+  },
+  {
+    "Id": 12,
+    "name": "Leg Curls",
+    "primaryMuscles": ["Hamstrings"],
+    "secondaryMuscles": [],
+    "equipment": "Machine",
+    "difficulty": 2
+  },
+  {
+    "Id": 13,
+    "name": "Calf Raises",
+    "primaryMuscles": ["Calves"],
+    "secondaryMuscles": [],
+    "equipment": "Machine",
+    "difficulty": 1
+  },
+  {
+    "Id": 14,
+    "name": "Chest Flyes",
+    "primaryMuscles": ["Chest"],
+    "secondaryMuscles": [],
+    "equipment": "Dumbbells",
+    "difficulty": 2
+  },
+  {
+    "Id": 15,
+    "name": "Incline Bench Press",
+    "primaryMuscles": ["Chest"],
+    "secondaryMuscles": ["Shoulders", "Triceps"],
+    "equipment": "Barbell",
+    "difficulty": 3
+  },
+  {
+    "Id": 16,
+    "name": "Shrugs",
+    "primaryMuscles": ["Traps"],
+    "secondaryMuscles": [],
+    "equipment": "Dumbbells",
+    "difficulty": 2
+  },
+  {
+    "Id": 17,
+    "name": "Face Pulls",
+    "primaryMuscles": ["Traps"],
+    "secondaryMuscles": ["Shoulders"],
+    "equipment": "Cable",
+    "difficulty": 2
+  },
+  {
+    "Id": 18,
+    "name": "Hip Thrusts",
+    "primaryMuscles": ["Glutes"],
+    "secondaryMuscles": ["Hamstrings"],
+    "equipment": "Barbell",
+    "difficulty": 3
+  },
+  {
+    "Id": 19,
+    "name": "Planks",
+    "primaryMuscles": ["Abs"],
+    "secondaryMuscles": [],
+    "equipment": "Bodyweight",
+    "difficulty": 2
+  },
+  {
+    "Id": 20,
+    "name": "Russian Twists",
+    "primaryMuscles": ["Abs"],
+    "secondaryMuscles": [],
+    "equipment": "Bodyweight",
+    "difficulty": 2
+  },
+  {
+    "Id": 21,
+    "name": "Lunges",
+    "primaryMuscles": ["Quadriceps"],
+    "secondaryMuscles": ["Glutes", "Hamstrings"],
+    "equipment": "Bodyweight",
+    "difficulty": 2
+  },
+  {
+    "Id": 22,
+    "name": "Bulgarian Split Squats",
+    "primaryMuscles": ["Quadriceps"],
+    "secondaryMuscles": ["Glutes"],
+    "equipment": "Bodyweight",
+    "difficulty": 3
+  },
+  {
+    "Id": 23,
+    "name": "Push-ups",
+    "primaryMuscles": ["Chest"],
+    "secondaryMuscles": ["Shoulders", "Triceps"],
+    "equipment": "Bodyweight",
+    "difficulty": 2
+  },
+  {
+    "Id": 24,
+    "name": "Mountain Climbers",
+    "primaryMuscles": ["Abs"],
+    "secondaryMuscles": ["Shoulders"],
+    "equipment": "Bodyweight",
+    "difficulty": 3
+  },
+  {
+    "Id": 25,
+    "name": "Burpees",
+    "primaryMuscles": ["Chest"],
+    "secondaryMuscles": ["Shoulders", "Quadriceps"],
+    "equipment": "Bodyweight",
+    "difficulty": 4
+  }
+]
