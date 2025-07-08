@@ -17,11 +17,13 @@ export const progressService = {
     return { ...progress };
   },
 
-  async create(progressEntry) {
+async create(progressEntry) {
     await delay(400);
     const newProgress = {
       ...progressEntry,
-      Id: Math.max(...progressData.map(p => p.Id)) + 1
+      Id: Math.max(...progressData.map(p => p.Id)) + 1,
+      beforePhotoUrl: progressEntry.beforePhotoUrl || null,
+      afterPhotoUrl: progressEntry.afterPhotoUrl || null
     };
     return { ...newProgress };
   },

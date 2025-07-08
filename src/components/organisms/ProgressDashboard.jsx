@@ -19,12 +19,14 @@ const ProgressDashboard = ({ className = "" }) => {
   const [showAddProgress, setShowAddProgress] = useState(false);
   const [showRecoveryMap, setShowRecoveryMap] = useState(false);
   const [muscleRecoveryData, setMuscleRecoveryData] = useState({});
-  const [newProgress, setNewProgress] = useState({
+const [newProgress, setNewProgress] = useState({
     weight: '',
     chest: '',
     waist: '',
     arms: '',
-    thighs: ''
+    thighs: '',
+    beforePhoto: '',
+    afterPhoto: ''
   });
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const ProgressDashboard = ({ className = "" }) => {
     }
   };
 
-  const handleAddProgress = async (e) => {
+const handleAddProgress = async (e) => {
     e.preventDefault();
     
     const progressEntry = {
@@ -66,7 +68,9 @@ const ProgressDashboard = ({ className = "" }) => {
         waist: parseFloat(newProgress.waist) || 0,
         arms: parseFloat(newProgress.arms) || 0,
         thighs: parseFloat(newProgress.thighs) || 0
-      }
+      },
+      beforePhotoUrl: newProgress.beforePhoto || null,
+      afterPhotoUrl: newProgress.afterPhoto || null
     };
 
     try {
@@ -77,7 +81,9 @@ const ProgressDashboard = ({ className = "" }) => {
         chest: '',
         waist: '',
         arms: '',
-        thighs: ''
+        thighs: '',
+        beforePhoto: '',
+        afterPhoto: ''
       });
       setShowAddProgress(false);
     } catch (error) {
@@ -216,6 +222,118 @@ const getThisWeekWorkouts = () => {
         </Button>
 </div>
 
+      {/* Photo Comparison Slider */}
+      {progressData.some(p => p.beforePhotoUrl || p.afterPhotoUrl) && (
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center justify-between mb-6">
+            <h4 className="font-display font-semibold text-gray-900">
+              Progress Photos
+            </h4>
+            <div className="text-sm text-secondary">
+              Before & After Comparison
+            </div>
+          </div>
+          
+          <div className="photo-comparison-container">
+            {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).slice(-3).map((entry, index) => (
+              <motion.div
+                key={entry.Id || index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="mb-6 last:mb-0"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-gray-700">
+                    {new Date(entry.date).toLocaleDateString()}
+                  </p>
+                  <p className="text-xs text-secondary">
+                    Weight: {entry.weight} lbs
+                  </p>
+                </div>
+                
+                <div className="photo-comparison-slider relative bg-gray-100 rounded-lg overflow-hidden">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    {/* Before Photo */}
+                    <div className="photo-container">
+                      <div className="text-xs font-medium text-gray-600 mb-2 text-center">
+                        Before
+                      </div>
+                      {entry.beforePhotoUrl ? (
+                        <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
+                          <img
+                            src={entry.beforePhotoUrl}
+                            alt="Before progress photo"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
+                          <div className="text-center text-gray-500">
+                            <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                            <p className="text-xs">No photo</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* After Photo */}
+                    <div className="photo-container">
+                      <div className="text-xs font-medium text-gray-600 mb-2 text-center">
+                        After
+                      </div>
+                      {entry.afterPhotoUrl ? (
+                        <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
+                          <img
+                            src={entry.afterPhotoUrl}
+                            alt="After progress photo"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
+                          <div className="text-center text-gray-500">
+                            <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                            <p className="text-xs">No photo</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Comparison Stats */}
+                  {entry.beforePhotoUrl && entry.afterPhotoUrl && (
+                    <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-3 border-t border-gray-200">
+                      <div className="flex justify-center space-x-6 text-xs">
+                        <div className="text-center">
+                          <p className="font-medium text-gray-900">Chest</p>
+                          <p className="text-secondary">{entry.measurements.chest}"</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="font-medium text-gray-900">Waist</p>
+                          <p className="text-secondary">{entry.measurements.waist}"</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="font-medium text-gray-900">Arms</p>
+                          <p className="text-secondary">{entry.measurements.arms}"</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+            
+            {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).length === 0 && (
+              <div className="text-center py-12 text-gray-500">
+                <ApperIcon name="Camera" className="w-12 h-12 mx-auto mb-4" />
+                <p className="font-medium mb-2">No progress photos yet</p>
+                <p className="text-sm">Add photos when logging your progress to see visual comparisons</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       {/* Muscle Recovery Map */}
       <div className="bg-white rounded-lg p-6 shadow-md">
         <div className="flex items-center justify-between mb-4">
@@ -542,7 +660,25 @@ const getThisWeekWorkouts = () => {
                 value={newProgress.thighs}
                 onChange={(e) => setNewProgress({...newProgress, thighs: e.target.value})}
                 step="0.1"
-              />
+/>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  label="Before Photo URL"
+                  type="url"
+                  value={newProgress.beforePhoto}
+                  onChange={(e) => setNewProgress({...newProgress, beforePhoto: e.target.value})}
+                  placeholder="https://example.com/before-photo.jpg"
+                />
+                
+                <FormField
+                  label="After Photo URL"
+                  type="url"
+                  value={newProgress.afterPhoto}
+                  onChange={(e) => setNewProgress({...newProgress, afterPhoto: e.target.value})}
+                  placeholder="https://example.com/after-photo.jpg"
+                />
+              </div>
               
               <div className="flex space-x-3 pt-4">
                 <Button

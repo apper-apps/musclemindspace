@@ -334,6 +334,82 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Photo comparison slider styles */
+.photo-comparison-container {
+  animation: fadeInUp 400ms ease-out;
+}
+
+.photo-comparison-slider {
+  transition: all 200ms ease-out;
+  border: 1px solid #e2e8f0;
+}
+
+.photo-comparison-slider:hover {
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+}
+
+.photo-container {
+  transition: all 200ms ease-out;
+}
+
+.photo-container:hover {
+  transform: translateY(-2px);
+}
+
+.photo-container img {
+  transition: all 200ms ease-out;
+  filter: brightness(1) contrast(1);
+}
+
+.photo-container:hover img {
+  filter: brightness(1.05) contrast(1.1);
+}
+
+/* Progress photo placeholders */
+.photo-placeholder {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px dashed #cbd5e1;
+  transition: all 200ms ease-out;
+}
+
+.photo-placeholder:hover {
+  border-color: #94a3b8;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+/* Photo comparison responsive design */
+@media (max-width: 768px) {
+  .photo-comparison-slider .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .photo-container {
+    margin-bottom: 0;
+  }
+  
+  .photo-comparison-slider {
+    padding: 16px;
+  }
+}
+
+/* Photo aspect ratio containers */
+.aspect-\[3\/4\] {
+  aspect-ratio: 3/4;
+}
+
+/* Touch-friendly photo interactions */
+@media (hover: none) and (pointer: coarse) {
+  .photo-container:hover {
+    transform: none;
+  }
+  
+  .photo-container img {
+    filter: brightness(1) contrast(1);
+  }
+}
+}
+
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .muscle-group.selected {
