@@ -553,70 +553,130 @@ const getThisWeekWorkouts = () => {
         </Button>
 </div>
 
-      {/* Photo Comparison Slider */}
-      {progressData.some(p => p.beforePhotoUrl || p.afterPhotoUrl) && (
-        <div className="bg-white rounded-lg p-6 shadow-md">
-          <div className="flex items-center justify-between mb-6">
-            <h4 className="font-display font-semibold text-gray-900">
-              Progress Photos
-            </h4>
-            <div className="text-sm text-secondary">
-              Before & After Comparison
+{/* Photo Upload Section */}
+      <div className="bg-white rounded-lg p-6 shadow-md">
+        <div className="flex items-center justify-between mb-6">
+          <h4 className="font-display font-semibold text-gray-900">
+            Progress Photos
+          </h4>
+          <div className="text-sm text-secondary">
+            Upload Your Progress Images
+          </div>
+        </div>
+        
+        <div className="photo-comparison-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Before Photo Upload */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Before Photo
+              </label>
+              
+              {photoPreviews.beforePhoto ? (
+                <div className="relative">
+                  <img 
+                    src={photoPreviews.beforePhoto} 
+                    alt="Before preview" 
+                    className="w-full h-48 object-cover rounded-lg border"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto('beforePhoto')}
+                    className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                  >
+                    <ApperIcon name="X" className="w-3 h-3" />
+                  </button>
+                </div>
+              ) : (
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e.target.files[0], 'beforePhoto')}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    id="mainBeforePhoto"
+                  />
+                  <label 
+                    htmlFor="mainBeforePhoto"
+                    className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary hover:bg-gray-50 transition-colors"
+                  >
+                    <ApperIcon name="Upload" className="w-12 h-12 text-gray-400 mb-3" />
+                    <span className="text-sm font-medium text-gray-700">Upload Before Photo</span>
+                    <span className="text-xs text-gray-500 mt-1">JPG, PNG, GIF up to 5MB</span>
+                  </label>
+                </div>
+              )}
+            </div>
+            
+            {/* After Photo Upload */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                After Photo
+              </label>
+              
+              {photoPreviews.afterPhoto ? (
+                <div className="relative">
+                  <img 
+                    src={photoPreviews.afterPhoto} 
+                    alt="After preview" 
+                    className="w-full h-48 object-cover rounded-lg border"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto('afterPhoto')}
+                    className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                  >
+                    <ApperIcon name="X" className="w-3 h-3" />
+                  </button>
+                </div>
+              ) : (
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e.target.files[0], 'afterPhoto')}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    id="mainAfterPhoto"
+                  />
+                  <label 
+                    htmlFor="mainAfterPhoto"
+                    className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary hover:bg-gray-50 transition-colors"
+                  >
+                    <ApperIcon name="Upload" className="w-12 h-12 text-gray-400 mb-3" />
+                    <span className="text-sm font-medium text-gray-700">Upload After Photo</span>
+                    <span className="text-xs text-gray-500 mt-1">JPG, PNG, GIF up to 5MB</span>
+                  </label>
+                </div>
+              )}
             </div>
           </div>
           
-<div className="photo-comparison-container">
-            {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).length > 0 ? (
-              progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).slice(-3).map((entry, index) => (
-                <motion.div
-                  key={entry.Id || index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="mb-6 last:mb-0"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-gray-700">
-                      {new Date(entry.date).toLocaleDateString()}
-                    </p>
-                    <p className="text-xs text-secondary">
-                      Progress Entry
-                    </p>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {entry.beforePhotoUrl && (
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-gray-700">Before</p>
-                        <img 
-                          src={entry.beforePhotoUrl} 
-                          alt="Before" 
-                          className="w-full h-48 object-cover rounded-lg"
-                        />
-                      </div>
-                    )}
-                    {entry.afterPhotoUrl && (
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-gray-700">After</p>
-                        <img 
-                          src={entry.afterPhotoUrl} 
-                          alt="After" 
-                          className="w-full h-48 object-cover rounded-lg"
-                        />
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <ApperIcon name="Camera" className="w-8 h-8 mx-auto mb-2" />
-                <p className="text-sm">No progress photos available</p>
+          {/* Upload Instructions */}
+          {!photoPreviews.beforePhoto && !photoPreviews.afterPhoto && (
+            <div className="mt-6 text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+              <ApperIcon name="Camera" className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+              <h5 className="text-lg font-medium text-gray-700 mb-2">Upload Your Progress Photos</h5>
+              <p className="text-sm text-gray-500 mb-4">
+                Track your transformation by uploading before and after photos
+              </p>
+              <div className="flex items-center justify-center space-x-6 text-xs text-gray-400">
+                <div className="flex items-center space-x-2">
+                  <ApperIcon name="Check" className="w-4 h-4 text-green-500" />
+                  <span>JPG, PNG, GIF</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <ApperIcon name="Check" className="w-4 h-4 text-green-500" />
+                  <span>Up to 5MB</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <ApperIcon name="Check" className="w-4 h-4 text-green-500" />
+                  <span>Instant Preview</span>
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Muscle Recovery Heat Map */}
       {workoutHistory.length > 0 && (
