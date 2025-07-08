@@ -4,10 +4,9 @@ import MuscleGroup from '@/components/molecules/MuscleGroup';
 import ApperIcon from '@/components/ApperIcon';
 import Button from '@/components/atoms/Button';
 
-const MuscleMap = ({ onMuscleSelect, selectedMuscles = [] }) => {
+const MuscleMap = ({ onMuscleSelect, selectedMuscles = [], recoveryData = {}, showRecovery = false }) => {
   const [view, setView] = useState('front');
   const [muscles, setMuscles] = useState([]);
-
   useEffect(() => {
     // Define muscle groups with SVG paths
     const muscleData = {
@@ -75,15 +74,32 @@ const MuscleMap = ({ onMuscleSelect, selectedMuscles = [] }) => {
     setMuscles(muscleData[view]);
   }, [view]);
 
-  const handleMuscleClick = (muscleId) => {
+const handleMuscleClick = (muscleId) => {
     const muscle = muscles.find(m => m.id === muscleId);
     if (muscle) {
-      onMuscleSelect(muscle.name);
+      if (showRecovery) {
+        // In recovery mode, show recovery info instead of selecting
+        const recovery = recoveryData[muscle.name] || { intensity: 0, needsRest: false };
+        // Could trigger a tooltip or info display
+      } else {
+        onMuscleSelect(muscle.name);
+      }
     }
   };
 
   const clearSelection = () => {
     onMuscleSelect(null, true);
+  };
+
+  const getMuscleRecoveryColor = (muscleName) => {
+    if (!showRecovery || !recoveryData[muscleName]) {
+      return null;
+    }
+    
+    const intensity = recoveryData[muscleName].intensity;
+    if (intensity > 0.6) return 'url(#recoveryHighGradient)';
+    if (intensity > 0.3) return 'url(#recoveryMediumGradient)';
+    return 'url(#recoveryLowGradient)';
   };
 
   return (
@@ -127,7 +143,7 @@ const MuscleMap = ({ onMuscleSelect, selectedMuscles = [] }) => {
               viewBox="0 0 400 500"
               className="max-w-full h-auto"
             >
-              <defs>
+<defs>
                 <linearGradient id="selectedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#2563EB" />
                   <stop offset="100%" stopColor="#1D4ED8" />
@@ -136,16 +152,30 @@ const MuscleMap = ({ onMuscleSelect, selectedMuscles = [] }) => {
                   <stop offset="0%" stopColor="#64748B" />
                   <stop offset="100%" stopColor="#475569" />
                 </linearGradient>
+                <linearGradient id="recoveryLowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#22C55E" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#16A34A" stopOpacity="0.4" />
+                </linearGradient>
+                <linearGradient id="recoveryMediumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#D97706" stopOpacity="0.7" />
+                </linearGradient>
+                <linearGradient id="recoveryHighGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#EF4444" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor="#DC2626" stopOpacity="0.9" />
+                </linearGradient>
               </defs>
               
-              {muscles.map((muscle) => (
+{muscles.map((muscle) => (
                 <MuscleGroup
                   key={muscle.id}
                   id={muscle.id}
                   name={muscle.name}
                   path={muscle.path}
-                  isSelected={selectedMuscles.includes(muscle.name)}
+                  isSelected={!showRecovery && selectedMuscles.includes(muscle.name)}
                   onClick={handleMuscleClick}
+                  customFill={showRecovery ? getMuscleRecoveryColor(muscle.name) : null}
+                  recoveryMode={showRecovery}
                 />
               ))}
             </svg>
