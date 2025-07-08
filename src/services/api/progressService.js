@@ -20,29 +20,24 @@ export const progressService = {
 async create(progressEntry) {
     await delay(400);
     
-    // Validate and sanitize photo URLs
-    const sanitizePhotoUrl = (url) => {
-      if (!url || typeof url !== 'string') return null;
+    // Validate base64 image data
+    const validateImageData = (data) => {
+      if (!data || typeof data !== 'string') return null;
       
-      // Check if URL is accessible (basic validation)
-      try {
-        new URL(url);
-        // For demo purposes, return null for external URLs that might fail
-        // In production, you'd want to validate URL accessibility
-        if (url.includes('unsplash.com') || url.includes('external')) {
-          return null; // Remove unreliable external URLs
-        }
-        return url;
-      } catch {
-        return null;
+      // Check if it's a valid base64 image
+      const base64Regex = /^data:image\/(jpeg|jpg|png|gif|webp);base64,/;
+      if (base64Regex.test(data)) {
+        return data;
       }
+      
+      return null;
     };
     
     const newProgress = {
       ...progressEntry,
       Id: Math.max(...progressData.map(p => p.Id)) + 1,
-      beforePhotoUrl: sanitizePhotoUrl(progressEntry.beforePhotoUrl),
-      afterPhotoUrl: sanitizePhotoUrl(progressEntry.afterPhotoUrl)
+      beforePhotoUrl: validateImageData(progressEntry.beforePhotoUrl),
+      afterPhotoUrl: validateImageData(progressEntry.afterPhotoUrl)
     };
     return { ...newProgress };
   },
@@ -54,27 +49,24 @@ async update(id, updates) {
       throw new Error('Progress record not found');
     }
     
-    // Sanitize photo URLs in updates
-    const sanitizePhotoUrl = (url) => {
-      if (!url || typeof url !== 'string') return null;
+    // Validate base64 image data in updates
+    const validateImageData = (data) => {
+      if (!data || typeof data !== 'string') return null;
       
-      try {
-        new URL(url);
-        if (url.includes('unsplash.com') || url.includes('external')) {
-          return null;
-        }
-        return url;
-      } catch {
-        return null;
+      const base64Regex = /^data:image\/(jpeg|jpg|png|gif|webp);base64,/;
+      if (base64Regex.test(data)) {
+        return data;
       }
+      
+      return null;
     };
     
     const sanitizedUpdates = { ...updates };
     if (sanitizedUpdates.beforePhotoUrl !== undefined) {
-      sanitizedUpdates.beforePhotoUrl = sanitizePhotoUrl(sanitizedUpdates.beforePhotoUrl);
+      sanitizedUpdates.beforePhotoUrl = validateImageData(sanitizedUpdates.beforePhotoUrl);
     }
     if (sanitizedUpdates.afterPhotoUrl !== undefined) {
-      sanitizedUpdates.afterPhotoUrl = sanitizePhotoUrl(sanitizedUpdates.afterPhotoUrl);
+      sanitizedUpdates.afterPhotoUrl = validateImageData(sanitizedUpdates.afterPhotoUrl);
     }
     
     const updatedProgress = { ...progressData[progressIndex], ...sanitizedUpdates };

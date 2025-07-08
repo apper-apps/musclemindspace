@@ -28,8 +28,16 @@ const [newProgress, setNewProgress] = useState({
     waist: '',
     arms: '',
     thighs: '',
-    beforePhoto: '',
-    afterPhoto: ''
+    beforePhoto: null,
+    afterPhoto: null
+  });
+  const [photoFiles, setPhotoFiles] = useState({
+    beforePhoto: null,
+    afterPhoto: null
+  });
+  const [photoPreviews, setPhotoPreviews] = useState({
+    beforePhoto: null,
+    afterPhoto: null
   });
 
   useEffect(() => {
@@ -60,6 +68,40 @@ const [newProgress, setNewProgress] = useState({
     }
   };
 
+const handleFileUpload = (file, type) => {
+    if (!file) return;
+    
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Please select a valid image file (JPG, PNG, GIF, or WebP)');
+      return;
+    }
+    
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB');
+      return;
+    }
+    
+    setPhotoFiles(prev => ({ ...prev, [type]: file }));
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64Data = e.target.result;
+      setPhotoPreviews(prev => ({ ...prev, [type]: base64Data }));
+      setNewProgress(prev => ({ ...prev, [type]: base64Data }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removePhoto = (type) => {
+    setPhotoFiles(prev => ({ ...prev, [type]: null }));
+    setPhotoPreviews(prev => ({ ...prev, [type]: null }));
+    setNewProgress(prev => ({ ...prev, [type]: null }));
+  };
+
 const handleAddProgress = async (e) => {
     e.preventDefault();
     
@@ -85,8 +127,16 @@ const handleAddProgress = async (e) => {
         waist: '',
         arms: '',
         thighs: '',
-        beforePhoto: '',
-        afterPhoto: ''
+        beforePhoto: null,
+        afterPhoto: null
+      });
+      setPhotoFiles({
+        beforePhoto: null,
+        afterPhoto: null
+      });
+      setPhotoPreviews({
+        beforePhoto: null,
+        afterPhoto: null
       });
       setShowAddProgress(false);
     } catch (error) {
@@ -1074,24 +1124,96 @@ const getThisWeekWorkouts = () => {
                 step="0.1"
 />
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  label="Before Photo URL"
-                  type="url"
-                  value={newProgress.beforePhoto}
-                  onChange={(e) => setNewProgress({...newProgress, beforePhoto: e.target.value})}
-                  placeholder="https://example.com/before-photo.jpg"
-                />
+{/* Photo Upload Section */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-medium text-gray-700">Progress Photos</h4>
                 
-                <FormField
-                  label="After Photo URL"
-                  type="url"
-                  value={newProgress.afterPhoto}
-                  onChange={(e) => setNewProgress({...newProgress, afterPhoto: e.target.value})}
-                  placeholder="https://example.com/after-photo.jpg"
-                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Before Photo Upload */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Before Photo
+                    </label>
+                    
+                    {photoPreviews.beforePhoto ? (
+                      <div className="relative">
+                        <img 
+                          src={photoPreviews.beforePhoto} 
+                          alt="Before preview" 
+                          className="w-full h-32 object-cover rounded-lg border"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto('beforePhoto')}
+                          className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                        >
+                          <ApperIcon name="X" className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="relative">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload(e.target.files[0], 'beforePhoto')}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          id="beforePhoto"
+                        />
+                        <label 
+                          htmlFor="beforePhoto"
+                          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary hover:bg-gray-50 transition-colors"
+                        >
+                          <ApperIcon name="Camera" className="w-8 h-8 text-gray-400 mb-2" />
+                          <span className="text-sm text-gray-500">Click to upload</span>
+                          <span className="text-xs text-gray-400">JPG, PNG, GIF up to 5MB</span>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* After Photo Upload */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-gray-700">
+                      After Photo
+                    </label>
+                    
+                    {photoPreviews.afterPhoto ? (
+                      <div className="relative">
+                        <img 
+                          src={photoPreviews.afterPhoto} 
+                          alt="After preview" 
+                          className="w-full h-32 object-cover rounded-lg border"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto('afterPhoto')}
+                          className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                        >
+                          <ApperIcon name="X" className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="relative">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload(e.target.files[0], 'afterPhoto')}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                          id="afterPhoto"
+                        />
+                        <label 
+                          htmlFor="afterPhoto"
+                          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary hover:bg-gray-50 transition-colors"
+                        >
+                          <ApperIcon name="Camera" className="w-8 h-8 text-gray-400 mb-2" />
+                          <span className="text-sm text-gray-500">Click to upload</span>
+                          <span className="text-xs text-gray-400">JPG, PNG, GIF up to 5MB</span>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-              
               <div className="flex space-x-3 pt-4">
                 <Button
                   type="button"
