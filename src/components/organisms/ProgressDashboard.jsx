@@ -856,10 +856,11 @@ const getThisWeekWorkouts = () => {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Weight Chart */}
         <div className="bg-white rounded-lg p-6 shadow-md">
-          <div className="flex items-center justify-between mb-4">
+<div className="flex items-center justify-between mb-4">
             <h4 className="font-display font-semibold text-gray-900">
               Weight Progress
-<div className="flex items-center space-x-2 text-sm text-gray-600">
+            </h4>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
               <ApperIcon name="TrendingUp" className="w-4 h-4" />
               <span>Weight tracking</span>
             </div>
