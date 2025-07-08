@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import ProgressDashboard from '@/components/organisms/ProgressDashboard';
+import WaterTracker from '@/components/organisms/WaterTracker';
 
 const Dashboard = () => {
   return (
@@ -20,6 +21,11 @@ const Dashboard = () => {
       </div>
 
       <ProgressDashboard />
+      
+      {/* Water Tracking Widget */}
+      <div className="mt-6">
+        <WaterTracker />
+      </div>
     </motion.div>
   );
 };

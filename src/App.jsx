@@ -6,6 +6,7 @@ import BottomNav from '@/components/organisms/BottomNav';
 import Dashboard from '@/components/pages/Dashboard';
 import MuscleMapPage from '@/components/pages/MuscleMapPage';
 import RoutinePage from '@/components/pages/RoutinePage';
+import WaterTrackerPage from '@/components/pages/WaterTrackerPage';
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Routes>
+<Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/muscle-map" element={<MuscleMapPage />} />
+            <Route path="/water" element={<WaterTrackerPage />} />
             <Route path="/routine" element={<RoutinePage />} />
           </Routes>
         </motion.div>

@@ -1,0 +1,114 @@
+[
+  {
+    "Id": 1,
+    "type": "goal",
+    "amount": 2000,
+    "date": "Mon Dec 09 2024",
+    "timestamp": "2024-12-09T06:00:00.000Z",
+    "note": "Daily water intake goal"
+  },
+  {
+    "Id": 2,
+    "type": "intake",
+    "amount": 250,
+    "date": "Mon Dec 09 2024",
+    "timestamp": "2024-12-09T07:30:00.000Z",
+    "note": "Morning glass"
+  },
+  {
+    "Id": 3,
+    "type": "intake",
+    "amount": 500,
+    "date": "Mon Dec 09 2024",
+    "timestamp": "2024-12-09T09:15:00.000Z",
+    "note": "Water bottle"
+  },
+  {
+    "Id": 4,
+    "type": "intake",
+    "amount": 750,
+    "date": "Mon Dec 09 2024",
+    "timestamp": "2024-12-09T12:00:00.000Z",
+    "note": "Lunch hydration"
+  },
+  {
+    "Id": 5,
+    "type": "intake",
+    "amount": 300,
+    "date": "Mon Dec 09 2024",
+    "timestamp": "2024-12-09T15:30:00.000Z",
+    "note": "Afternoon drink"
+  },
+  {
+    "Id": 6,
+    "type": "intake",
+    "amount": 400,
+    "date": "Sun Dec 08 2024",
+    "timestamp": "2024-12-08T08:00:00.000Z",
+    "note": "Morning hydration"
+  },
+  {
+    "Id": 7,
+    "type": "intake",
+    "amount": 600,
+    "date": "Sun Dec 08 2024",
+    "timestamp": "2024-12-08T11:30:00.000Z",
+    "note": "Pre-workout"
+  },
+  {
+    "Id": 8,
+    "type": "intake",
+    "amount": 800,
+    "date": "Sun Dec 08 2024",
+    "timestamp": "2024-12-08T14:00:00.000Z",
+    "note": "Post-workout"
+  },
+  {
+    "Id": 9,
+    "type": "intake",
+    "amount": 350,
+    "date": "Sun Dec 08 2024",
+    "timestamp": "2024-12-08T18:00:00.000Z",
+    "note": "Evening glass"
+  },
+  {
+    "Id": 10,
+    "type": "intake",
+    "amount": 250,
+    "date": "Sat Dec 07 2024",
+    "timestamp": "2024-12-07T07:00:00.000Z",
+    "note": "Wake up water"
+  },
+  {
+    "Id": 11,
+    "type": "intake",
+    "amount": 500,
+    "date": "Sat Dec 07 2024",
+    "timestamp": "2024-12-07T10:00:00.000Z",
+    "note": "Mid-morning"
+  },
+  {
+    "Id": 12,
+    "type": "intake",
+    "amount": 400,
+    "date": "Sat Dec 07 2024",
+    "timestamp": "2024-12-07T13:30:00.000Z",
+    "note": "Lunch drink"
+  },
+  {
+    "Id": 13,
+    "type": "intake",
+    "amount": 600,
+    "date": "Sat Dec 07 2024",
+    "timestamp": "2024-12-07T16:00:00.000Z",
+    "note": "Afternoon boost"
+  },
+  {
+    "Id": 14,
+    "type": "intake",
+    "amount": 300,
+    "date": "Sat Dec 07 2024",
+    "timestamp": "2024-12-07T19:00:00.000Z",
+    "note": "Dinner water"
+  }
+]
