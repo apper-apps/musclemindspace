@@ -632,14 +632,12 @@ const getThisWeekWorkouts = () => {
                         <p className="font-medium text-gray-900">Arms</p>
                         <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
                       </div>
+</div>
                     </div>
                   </div>
                 )}
-              </div>
-            </motion.div>
-          ))}
-            
-            {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).length === 0 && (
+              </motion.div>
+            ))}
               <div className="text-center py-12 text-gray-500">
                 <ApperIcon name="Camera" className="w-12 h-12 mx-auto mb-4" />
                 <p className="font-medium mb-2">No progress photos yet</p>
