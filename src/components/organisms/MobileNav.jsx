@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom';
 import ApperIcon from '@/components/ApperIcon';
 
 const MobileNav = ({ isOpen, onClose }) => {
-  const navItems = [
+const navItems = [
     { name: 'Dashboard', path: '/', icon: 'Home' },
     { name: 'Muscle Map', path: '/muscle-map', icon: 'Target' },
     { name: 'My Routine', path: '/routine', icon: 'Dumbbell' },
+    { name: 'Water Tracker', path: '/water', icon: 'Droplets' },
   ];
 
   return (
