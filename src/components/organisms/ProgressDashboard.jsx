@@ -512,132 +512,133 @@ const getThisWeekWorkouts = () => {
             </div>
           </div>
           
-          <div className="photo-comparison-container">
-            {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).slice(-3).map((entry, index) => (
-              <motion.div
-                key={entry.Id || index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="mb-6 last:mb-0"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-medium text-gray-700">
-                    {new Date(entry.date).toLocaleDateString()}
-                  </p>
-                  <p className="text-xs text-secondary">
-                    Weight: {entry.weight} lbs
-                  </p>
-                </div>
-                
-                <div className="photo-comparison-slider relative bg-gray-100 rounded-lg overflow-hidden">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                    {/* Before Photo */}
-<div className="photo-container">
-                      <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-                        <h4 className="font-semibold text-gray-900 mb-4">Before</h4>
-                      </div>
-                      {entry?.beforePhotoUrl ? (
-                        <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
-                          <img
-                            src={entry.beforePhotoUrl}
-                            alt="Before progress photo"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'flex';
-                            }}
-                            onLoad={(e) => {
-                              e.target.style.display = 'block';
-                              if (e.target.nextSibling) {
-                                e.target.nextSibling.style.display = 'none';
-                              }
-                            }}
-                          />
-                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
-                            <div className="text-center text-gray-500">
-                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                              <p className="text-xs">Photo unavailable</p>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
-                          <div className="text-center text-gray-500">
-                            <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                            <p className="text-xs">No photo</p>
-                          </div>
-</div>
-                      )}
-                    </div>
-                    
-                    {/* After Photo */}
-                    <div className="photo-container">
-                      <div className="text-xs font-medium text-gray-600 mb-2 text-center">
-                        <h4 className="font-semibold text-gray-900 mb-4">After</h4>
-                      </div>
-                      {entry?.afterPhotoUrl ? (
-                        <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
-                          <img
-                            src={entry.afterPhotoUrl}
-                            alt="After progress photo"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'flex';
-                            }}
-                            onLoad={(e) => {
-                              e.target.style.display = 'block';
-                              if (e.target.nextSibling) {
-                                e.target.nextSibling.style.display = 'none';
-                              }
-                            }}
-                          />
-                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
-                            <div className="text-center text-gray-500">
-                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                              <p className="text-xs">Photo unavailable</p>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
-                          <div className="text-center text-gray-500">
-                            <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
-                            <p className="text-xs">No photo</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+<div className="photo-comparison-container">
+            {progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).length > 0 ? (
+              progressData.filter(p => p.beforePhotoUrl || p.afterPhotoUrl).slice(-3).map((entry, index) => (
+                <motion.div
+                  key={entry.Id || index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="mb-6 last:mb-0"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-gray-700">
+                      {new Date(entry.date).toLocaleDateString()}
+                    </p>
+                    <p className="text-xs text-secondary">
+                      Weight: {entry.weight} lbs
+                    </p>
                   </div>
-                  <div className="mt-4 text-sm text-gray-600">
-                    <p><strong>Weight:</strong> {entry.weight}lbs</p>
-<p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
-                  </div>
-                </div>
                   
-                {/* Comparison Stats */}
-                {entry.beforePhotoUrl && entry.afterPhotoUrl && (
-                  <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-3 border-t border-gray-200">
-                    <div className="flex justify-center space-x-6 text-xs">
-                      <div className="text-center">
-                        <p className="font-medium text-gray-900">Chest</p>
-                        <p className="text-secondary">{entry?.measurements?.chest || 0}"</p>
+                  <div className="photo-comparison-slider relative bg-gray-100 rounded-lg overflow-hidden">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                      {/* Before Photo */}
+                      <div className="photo-container">
+                        <div className="text-xs font-medium text-gray-600 mb-2 text-center">
+                          <h4 className="font-semibold text-gray-900 mb-4">Before</h4>
+                        </div>
+                        {entry?.beforePhotoUrl ? (
+                          <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
+                            <img
+                              src={entry.beforePhotoUrl}
+                              alt="Before progress photo"
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                              }}
+                              onLoad={(e) => {
+                                e.target.style.display = 'block';
+                                if (e.target.nextSibling) {
+                                  e.target.nextSibling.style.display = 'none';
+                                }
+                              }}
+                            />
+                            <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
+                              <div className="text-center text-gray-500">
+                                <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                                <p className="text-xs">Photo unavailable</p>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
+                            <div className="text-center text-gray-500">
+                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                              <p className="text-xs">No photo</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <div className="text-center">
-                        <p className="font-medium text-gray-900">Waist</p>
-                        <p className="text-secondary">{entry?.measurements?.waist || 0}"</p>
+                      
+                      {/* After Photo */}
+                      <div className="photo-container">
+                        <div className="text-xs font-medium text-gray-600 mb-2 text-center">
+                          <h4 className="font-semibold text-gray-900 mb-4">After</h4>
+                        </div>
+                        {entry?.afterPhotoUrl ? (
+                          <div className="aspect-[3/4] bg-gray-200 rounded-lg overflow-hidden">
+                            <img
+                              src={entry.afterPhotoUrl}
+                              alt="After progress photo"
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                              }}
+                              onLoad={(e) => {
+                                e.target.style.display = 'block';
+                                if (e.target.nextSibling) {
+                                  e.target.nextSibling.style.display = 'none';
+                                }
+                              }}
+                            />
+                            <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center" style={{ display: 'none' }}>
+                              <div className="text-center text-gray-500">
+                                <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                                <p className="text-xs">Photo unavailable</p>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
+                            <div className="text-center text-gray-500">
+                              <ApperIcon name="Image" className="w-8 h-8 mx-auto mb-2" />
+                              <p className="text-xs">No photo</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <div className="text-center">
-                        <p className="font-medium text-gray-900">Arms</p>
-                        <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
-                      </div>
-</div>
+                    </div>
+                    <div className="mt-4 text-sm text-gray-600">
+                      <p><strong>Weight:</strong> {entry.weight}lbs</p>
+                      <p><strong>Date:</strong> {new Date(entry.date).toLocaleDateString()}</p>
                     </div>
                   </div>
-                )}
-              </motion.div>
-            ))}
+                    
+                  {/* Comparison Stats */}
+                  {entry.beforePhotoUrl && entry.afterPhotoUrl && (
+                    <div className="bg-gradient-to-r from-primary/10 to-accent/10 p-3 border-t border-gray-200">
+                      <div className="flex justify-center space-x-6 text-xs">
+                        <div className="text-center">
+                          <p className="font-medium text-gray-900">Chest</p>
+                          <p className="text-secondary">{entry?.measurements?.chest || 0}"</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="font-medium text-gray-900">Waist</p>
+                          <p className="text-secondary">{entry?.measurements?.waist || 0}"</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="font-medium text-gray-900">Arms</p>
+                          <p className="text-secondary">{entry?.measurements?.arms || 0}"</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              ))
+            ) : (
               <div className="text-center py-12 text-gray-500">
                 <ApperIcon name="Camera" className="w-12 h-12 mx-auto mb-4" />
                 <p className="font-medium mb-2">No progress photos yet</p>
