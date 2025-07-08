@@ -19,6 +19,8 @@ const ProgressDashboard = ({ className = "" }) => {
   const [showAddProgress, setShowAddProgress] = useState(false);
   const [showRecoveryMap, setShowRecoveryMap] = useState(false);
   const [muscleRecoveryData, setMuscleRecoveryData] = useState({});
+  const [selectedDateRange, setSelectedDateRange] = useState('3months');
+  const [selectedMetrics, setSelectedMetrics] = useState(['weight', 'chest', 'waist']);
 const [newProgress, setNewProgress] = useState({
     weight: '',
     chest: '',
@@ -91,8 +93,27 @@ const handleAddProgress = async (e) => {
     }
   };
 
+const getFilteredData = () => {
+    const now = new Date();
+    const ranges = {
+      '1month': 30,
+      '3months': 90,
+      '6months': 180,
+      '1year': 365,
+      'all': null
+    };
+    
+    const daysBack = ranges[selectedDateRange];
+    if (!daysBack) return progressData;
+    
+    const cutoffDate = new Date(now.getTime() - (daysBack * 24 * 60 * 60 * 1000));
+    return progressData.filter(entry => new Date(entry.date) >= cutoffDate);
+  };
+
   const getWeightChartData = () => {
-    const sortedData = [...progressData].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const filteredData = getFilteredData();
+    const sortedData = [...filteredData].sort((a, b) => new Date(a.date) - new Date(b.date));
+    
     return {
       series: [{
         name: 'Weight',
@@ -102,7 +123,12 @@ const handleAddProgress = async (e) => {
         chart: {
           type: 'line',
           height: 300,
-          toolbar: { show: false }
+          toolbar: { show: false },
+          animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800
+          }
         },
         colors: ['#2563EB'],
         stroke: {
@@ -112,16 +138,267 @@ const handleAddProgress = async (e) => {
         xaxis: {
           categories: sortedData.map(entry => 
             new Date(entry.date).toLocaleDateString()
-          )
+          ),
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: '#64748B'
+            }
+          }
         },
         yaxis: {
-          title: { text: 'Weight (lbs)' }
+          title: { 
+            text: 'Weight (lbs)',
+            style: {
+              fontSize: '12px',
+              color: '#64748B'
+            }
+          },
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: '#64748B'
+            }
+          }
         },
         grid: {
-          strokeDashArray: 3
+          strokeDashArray: 3,
+          borderColor: '#E2E8F0'
+        },
+        tooltip: {
+          theme: 'light',
+          y: {
+            formatter: (value) => `${value} lbs`
+          }
         }
       }
     };
+  };
+
+  const getBodyMeasurementsChartData = () => {
+    const filteredData = getFilteredData();
+    const sortedData = [...filteredData].sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    const series = [];
+    const colors = ['#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+    const measurements = ['chest', 'waist', 'arms', 'thighs'];
+    
+    measurements.forEach((measurement, index) => {
+      if (selectedMetrics.includes(measurement)) {
+        series.push({
+          name: measurement.charAt(0).toUpperCase() + measurement.slice(1),
+          data: sortedData.map(entry => entry.measurements[measurement] || 0)
+        });
+      }
+    });
+
+    return {
+      series,
+      options: {
+        chart: {
+          type: 'line',
+          height: 300,
+          toolbar: { show: false },
+          animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800
+          }
+        },
+        colors: colors.slice(0, series.length),
+        stroke: {
+          curve: 'smooth',
+          width: 2
+        },
+        xaxis: {
+          categories: sortedData.map(entry => 
+            new Date(entry.date).toLocaleDateString()
+          ),
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: '#64748B'
+            }
+          }
+        },
+        yaxis: {
+          title: { 
+            text: 'Measurements (inches)',
+            style: {
+              fontSize: '12px',
+              color: '#64748B'
+            }
+          },
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: '#64748B'
+            }
+          }
+        },
+        grid: {
+          strokeDashArray: 3,
+          borderColor: '#E2E8F0'
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'left'
+        },
+        tooltip: {
+          theme: 'light',
+          y: {
+            formatter: (value) => `${value}"`
+          }
+        }
+      }
+    };
+  };
+
+  const getWorkoutFrequencyChartData = () => {
+    const now = new Date();
+    const weeks = [];
+    const workoutCounts = [];
+    
+    // Get last 12 weeks of data
+    for (let i = 11; i >= 0; i--) {
+      const weekStart = new Date(now.getTime() - (i * 7 * 24 * 60 * 60 * 1000));
+      const weekEnd = new Date(weekStart.getTime() + (6 * 24 * 60 * 60 * 1000));
+      
+      const weekWorkouts = workoutHistory.filter(workout => {
+        const workoutDate = new Date(workout.date);
+        return workoutDate >= weekStart && workoutDate <= weekEnd;
+      });
+      
+      weeks.push(`Week ${12 - i}`);
+      workoutCounts.push(weekWorkouts.length);
+    }
+
+    return {
+      series: [{
+        name: 'Workouts',
+        data: workoutCounts
+      }],
+      options: {
+        chart: {
+          type: 'column',
+          height: 300,
+          toolbar: { show: false },
+          animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800
+          }
+        },
+        colors: ['#10B981'],
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            columnWidth: '60%'
+          }
+        },
+        xaxis: {
+          categories: weeks,
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: '#64748B'
+            }
+          }
+        },
+        yaxis: {
+          title: { 
+            text: 'Number of Workouts',
+            style: {
+              fontSize: '12px',
+              color: '#64748B'
+            }
+          },
+          labels: {
+            style: {
+              fontSize: '12px',
+              colors: '#64748B'
+            }
+          }
+        },
+        grid: {
+          strokeDashArray: 3,
+          borderColor: '#E2E8F0'
+        },
+        tooltip: {
+          theme: 'light',
+          y: {
+            formatter: (value) => `${value} workout${value !== 1 ? 's' : ''}`
+          }
+        }
+      }
+    };
+  };
+
+  const generateProgressInsights = () => {
+    const filteredData = getFilteredData();
+    if (filteredData.length < 2) return [];
+
+    const insights = [];
+    const sortedData = [...filteredData].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const latest = sortedData[sortedData.length - 1];
+    const earliest = sortedData[0];
+
+    // Weight trend analysis
+    const weightChange = latest.weight - earliest.weight;
+    if (Math.abs(weightChange) > 0.5) {
+      insights.push({
+        type: weightChange > 0 ? 'warning' : 'success',
+        icon: weightChange > 0 ? 'TrendingUp' : 'TrendingDown',
+        title: `Weight ${weightChange > 0 ? 'Gain' : 'Loss'}`,
+        description: `You've ${weightChange > 0 ? 'gained' : 'lost'} ${Math.abs(weightChange).toFixed(1)} lbs over the selected period`,
+        value: `${weightChange > 0 ? '+' : ''}${weightChange.toFixed(1)} lbs`
+      });
+    }
+
+    // Measurement improvements
+    const measurements = ['chest', 'waist', 'arms', 'thighs'];
+    measurements.forEach(measurement => {
+      const change = latest.measurements[measurement] - earliest.measurements[measurement];
+      if (Math.abs(change) > 0.2) {
+        const isPositive = (measurement === 'waist') ? change < 0 : change > 0;
+        insights.push({
+          type: isPositive ? 'success' : 'info',
+          icon: isPositive ? 'TrendingUp' : 'TrendingDown',
+          title: `${measurement.charAt(0).toUpperCase() + measurement.slice(1)} Progress`,
+          description: `${Math.abs(change).toFixed(1)}" ${change > 0 ? 'increase' : 'decrease'} in ${measurement} measurement`,
+          value: `${change > 0 ? '+' : ''}${change.toFixed(1)}"`
+        });
+      }
+    });
+
+    // Workout consistency
+    const recentWeeks = 4;
+    const recentWorkouts = workoutHistory.filter(workout => {
+      const workoutDate = new Date(workout.date);
+      const weeksAgo = new Date(Date.now() - (recentWeeks * 7 * 24 * 60 * 60 * 1000));
+      return workoutDate >= weeksAgo;
+    });
+    
+    const avgWorkoutsPerWeek = recentWorkouts.length / recentWeeks;
+    if (avgWorkoutsPerWeek >= 3) {
+      insights.push({
+        type: 'success',
+        icon: 'Activity',
+        title: 'Great Consistency!',
+        description: `Averaging ${avgWorkoutsPerWeek.toFixed(1)} workouts per week`,
+        value: `${avgWorkoutsPerWeek.toFixed(1)}/week`
+      });
+    } else if (avgWorkoutsPerWeek < 2) {
+      insights.push({
+        type: 'warning',
+        icon: 'AlertCircle',
+        title: 'Consistency Opportunity',
+        description: 'Consider increasing workout frequency for better results',
+        value: `${avgWorkoutsPerWeek.toFixed(1)}/week`
+      });
+    }
+
+    return insights.slice(0, 4); // Limit to 4 insights
   };
 
   const getCurrentStats = () => {
@@ -560,14 +837,113 @@ const getThisWeekWorkouts = () => {
         </motion.div>
       </div>
 
-      {/* Progress Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Weight Chart */}
+{/* Chart Controls */}
+      <div className="bg-white rounded-lg p-6 shadow-md">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <h3 className="text-lg font-display font-semibold text-gray-900">
+            Detailed Progress Charts
+          </h3>
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Date Range Filter */}
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-medium text-gray-700">Time Range:</label>
+              <select
+                value={selectedDateRange}
+                onChange={(e) => setSelectedDateRange(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary"
+              >
+                <option value="1month">Last Month</option>
+                <option value="3months">Last 3 Months</option>
+                <option value="6months">Last 6 Months</option>
+                <option value="1year">Last Year</option>
+                <option value="all">All Time</option>
+              </select>
+            </div>
+            
+            {/* Metric Selection */}
+            <div className="flex items-center space-x-2">
+              <label className="text-sm font-medium text-gray-700">Measurements:</label>
+              <div className="flex space-x-2">
+                {['chest', 'waist', 'arms', 'thighs'].map(metric => (
+                  <button
+                    key={metric}
+                    onClick={() => {
+                      setSelectedMetrics(prev => 
+                        prev.includes(metric) 
+                          ? prev.filter(m => m !== metric)
+                          : [...prev, metric]
+                      );
+                    }}
+                    className={`px-2 py-1 text-xs rounded-md border transition-colors ${
+                      selectedMetrics.includes(metric)
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    {metric.charAt(0).toUpperCase() + metric.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Progress Insights */}
+      {progressData.length > 1 && (
         <div className="bg-white rounded-lg p-6 shadow-md">
           <h4 className="font-display font-semibold text-gray-900 mb-4">
-            Weight Progress
+            Progress Insights
           </h4>
-          {progressData.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            {generateProgressInsights().map((insight, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`p-4 rounded-lg border-l-4 ${
+                  insight.type === 'success' ? 'border-success bg-green-50' :
+                  insight.type === 'warning' ? 'border-warning bg-amber-50' :
+                  insight.type === 'error' ? 'border-error bg-red-50' :
+                  'border-info bg-blue-50'
+                }`}
+              >
+                <div className="flex items-start space-x-3">
+                  <div className={`p-2 rounded-full ${
+                    insight.type === 'success' ? 'bg-success text-white' :
+                    insight.type === 'warning' ? 'bg-warning text-white' :
+                    insight.type === 'error' ? 'bg-error text-white' :
+                    'bg-info text-white'
+                  }`}>
+                    <ApperIcon name={insight.icon} className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900">{insight.title}</p>
+                    <p className="text-xs text-gray-600 mt-1">{insight.description}</p>
+                    <p className="text-sm font-bold text-gray-900 mt-2">{insight.value}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Progress Charts */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        {/* Weight Chart */}
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-display font-semibold text-gray-900">
+              Weight Progress
+            </h4>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <ApperIcon name="TrendingUp" className="w-4 h-4" />
+              <span>{getFilteredData().length} data points</span>
+            </div>
+          </div>
+          {getFilteredData().length > 0 ? (
             <div className="chart-container">
               <Chart
                 options={getWeightChartData().options}
@@ -579,16 +955,83 @@ const getThisWeekWorkouts = () => {
           ) : (
             <div className="text-center py-8 text-gray-500">
               <ApperIcon name="TrendingUp" className="w-8 h-8 mx-auto mb-2" />
-              <p className="text-sm">No weight data yet</p>
+              <p className="text-sm">No weight data in selected range</p>
+            </div>
+          )}
+        </div>
+
+        {/* Body Measurements Chart */}
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-display font-semibold text-gray-900">
+              Body Measurements
+            </h4>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <ApperIcon name="Ruler" className="w-4 h-4" />
+              <span>{selectedMetrics.length} metrics</span>
+            </div>
+          </div>
+          {getFilteredData().length > 0 && selectedMetrics.length > 0 ? (
+            <div className="chart-container">
+              <Chart
+                options={getBodyMeasurementsChartData().options}
+                series={getBodyMeasurementsChartData().series}
+                type="line"
+                height={300}
+              />
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <ApperIcon name="Ruler" className="w-8 h-8 mx-auto mb-2" />
+              <p className="text-sm">
+                {getFilteredData().length === 0 
+                  ? 'No measurement data in selected range'
+                  : 'Select measurements to display'
+                }
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Workout Frequency Chart */}
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-display font-semibold text-gray-900">
+              Workout Frequency
+            </h4>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <ApperIcon name="Activity" className="w-4 h-4" />
+              <span>Last 12 weeks</span>
+            </div>
+          </div>
+          {workoutHistory.length > 0 ? (
+            <div className="chart-container">
+              <Chart
+                options={getWorkoutFrequencyChartData().options}
+                series={getWorkoutFrequencyChartData().series}
+                type="column"
+                height={300}
+              />
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <ApperIcon name="Activity" className="w-8 h-8 mx-auto mb-2" />
+              <p className="text-sm">No workout data available</p>
             </div>
           )}
         </div>
 
         {/* Weekly Progress Ring */}
         <div className="bg-white rounded-lg p-6 shadow-md">
-          <h4 className="font-display font-semibold text-gray-900 mb-4">
-            Weekly Goal
-          </h4>
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-display font-semibold text-gray-900">
+              Weekly Goal Progress
+            </h4>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <ApperIcon name="Target" className="w-4 h-4" />
+              <span>This week</span>
+            </div>
+          </div>
           <div className="flex items-center justify-center">
             <ProgressRing
               progress={(thisWeekWorkouts.length / 5) * 100}
@@ -601,8 +1044,19 @@ const getThisWeekWorkouts = () => {
                   {thisWeekWorkouts.length}
                 </div>
                 <div className="text-sm text-secondary">of 5 workouts</div>
+                <div className="text-xs text-gray-500 mt-1">
+                  {Math.round((thisWeekWorkouts.length / 5) * 100)}% complete
+                </div>
               </div>
             </ProgressRing>
+          </div>
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600">
+              {thisWeekWorkouts.length >= 5 
+                ? '🎉 Weekly goal achieved!' 
+                : `${5 - thisWeekWorkouts.length} more workout${5 - thisWeekWorkouts.length !== 1 ? 's' : ''} to reach your goal`
+              }
+            </p>
           </div>
         </div>
       </div>
