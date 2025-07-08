@@ -1,11 +1,17 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import SetLogger from '@/components/molecules/SetLogger';
-import ApperIcon from '@/components/ApperIcon';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
-import Empty from '@/components/ui/Empty';
-import { routineService } from '@/services/api/routineService';
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
+import SetLogger from "@/components/molecules/SetLogger";
+import exercises from "@/services/mockData/exercises.json";
+import workouts from "@/services/mockData/workouts.json";
+import routines from "@/services/mockData/routines.json";
+import progress from "@/services/mockData/progress.json";
+import { exerciseService } from "@/services/api/exerciseService";
+import { routineService } from "@/services/api/routineService";
 
 const RoutineBuilder = ({ 
   selectedExercises = [], 
@@ -237,10 +243,18 @@ const RoutineBuilder = ({
                       onSetsChange={(sets) => handleSetsChange(exercise.Id, sets)}
                       exerciseName={exercise.name}
                     />
-                  </motion.div>
+</motion.div>
                 ))}
               </AnimatePresence>
             </div>
+
+            {/* AI Suggestion Panel */}
+            {selectedExercises.length > 0 && (
+              <AISuggestionPanel 
+                selectedExercises={selectedExercises}
+                onExerciseSelect={onExerciseSelect}
+              />
+            )}
           </div>
         ) : (
           <Empty
@@ -252,6 +266,142 @@ const RoutineBuilder = ({
       </div>
     </div>
   );
+};
+
+// AI Suggestion Panel Component
+const AISuggestionPanel = ({ selectedExercises, onExerciseSelect }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadSuggestions = async () => {
+      if (selectedExercises.length === 0) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const smartSuggestions = await exerciseService.getSmartSuggestions(selectedExercises);
+        setSuggestions(smartSuggestions);
+      } catch (err) {
+        setError('Failed to load exercise suggestions');
+        console.error('Error loading suggestions:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSuggestions();
+  }, [selectedExercises]);
+
+  const handleAddExercise = (exercise) => {
+    if (onExerciseSelect) {
+      onExerciseSelect(exercise);
+    }
+  };
+
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200"
+      >
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+            <ApperIcon name="Brain" className="w-4 h-4 text-white" />
+          </div>
+          <h4 className="font-display font-semibold text-gray-900">AI Exercise Suggestions</h4>
+        </div>
+        <Loading />
+      </motion.div>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gradient-to-r from-red-50 to-pink-50 rounded-lg p-6 border border-red-200"
+      >
+        <div className="flex items-center space-x-3">
+          <ApperIcon name="AlertCircle" className="w-5 h-5 text-red-500" />
+          <p className="text-sm text-red-700">{error}</p>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (suggestions.length === 0) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200"
+    >
+      <div className="flex items-center space-x-3 mb-4">
+        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+          <ApperIcon name="Brain" className="w-4 h-4 text-white" />
+        </div>
+        <div>
+          <h4 className="font-display font-semibold text-gray-900">AI Exercise Suggestions</h4>
+          <p className="text-sm text-gray-600">Recommended to complement your routine</p>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        {suggestions.map((suggestion, index) => (
+          <motion.div
+            key={suggestion.exercise.Id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-white rounded-lg p-4 border border-blue-100 hover:border-blue-200 transition-all duration-200"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="flex items-center space-x-2 mb-2">
+                  <h5 className="font-display font-medium text-gray-900">
+                    {suggestion.exercise.name}
+                  </h5>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                    {suggestion.score}% match
+                  </span>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">
+                  {suggestion.exercise.equipment} • {suggestion.exercise.primaryMuscles.join(', ')}
+                </p>
+                <div className="flex items-start space-x-2">
+                  <ApperIcon name="Lightbulb" className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-gray-700">{suggestion.reason}</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleAddExercise(suggestion.exercise)}
+                className="ml-4 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+              >
+                <ApperIcon name="Plus" className="w-4 h-4" />
+              </Button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-4 p-3 bg-blue-100 rounded-lg">
+        <div className="flex items-start space-x-2">
+          <ApperIcon name="Info" className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-blue-800">
+            These suggestions are based on muscle group balance and complementary movement patterns.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+);
 };
 
 export default RoutineBuilder;
