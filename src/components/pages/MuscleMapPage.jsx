@@ -37,15 +37,15 @@ return (
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div>
+<div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <div className="w-full">
             <MuscleMap 
               onMuscleSelect={handleMuscleSelect}
               selectedMuscles={selectedMuscles}
             />
           </div>
           
-          <div>
+          <div className="w-full">
             <ExerciseLibrary 
               selectedMuscles={selectedMuscles}
             />

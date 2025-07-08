@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
+colors: {
         primary: '#2563EB',
         secondary: '#64748B',
         accent: '#10B981',
@@ -15,6 +15,12 @@ export default {
         warning: '#F59E0B',
         error: '#EF4444',
         info: '#3B82F6',
+        muscle: {
+          active: '#DC2626',
+          selected: '#2563EB',
+          unselected: '#6B7280',
+          hover: '#EF4444',
+        },
       },
       fontFamily: {
         display: ['Plus Jakarta Sans', 'sans-serif'],

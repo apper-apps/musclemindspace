@@ -11,79 +11,80 @@ const MuscleMap = ({ onMuscleSelect, selectedMuscles = [], recoveryData = {}, sh
   const [muscles, setMuscles] = useState([]);
 useEffect(() => {
     // Define muscle groups with anatomically accurate SVG paths representing a realistic human figure
+// Enhanced muscle data with realistic anatomical proportions and detailed muscle fiber patterns
     const muscleData = {
       front: [
         { 
           id: 'chest', 
           name: 'Chest (Pectorals)', 
-          path: 'M160 120 C150 115 145 125 150 140 L155 160 C160 175 170 185 185 190 L200 195 L215 190 C230 185 240 175 245 160 L250 140 C255 125 250 115 240 120 C230 125 220 130 200 130 C180 130 170 125 160 120 Z M170 140 L170 160 M185 145 L185 165 M200 145 L200 165 M215 145 L215 165 M230 140 L230 160' 
+          path: 'M160 115 C148 108 142 118 148 135 L152 155 C158 172 168 182 185 188 L200 192 L215 188 C232 182 242 172 248 155 L252 135 C258 118 252 108 240 115 C228 122 218 127 200 127 C182 127 172 122 160 115 Z M172 135 L172 155 C173 158 175 160 177 160 M187 140 L187 160 C188 163 190 165 192 165 M200 140 L200 160 C201 163 203 165 205 165 M213 140 L213 160 C214 163 216 165 218 165 M228 135 L228 155 C229 158 231 160 233 160 M165 120 Q185 125 200 125 Q215 125 235 120' 
         },
         { 
           id: 'shoulders', 
           name: 'Shoulders (Deltoids)', 
-          path: 'M120 95 C110 90 105 100 110 115 C115 130 125 140 140 145 L160 150 C170 155 175 150 170 140 L165 125 C160 110 155 100 150 95 C140 90 130 90 120 95 Z M280 95 C290 90 295 100 290 115 C285 130 275 140 260 145 L240 150 C230 155 225 150 230 140 L235 125 C240 110 245 100 250 95 C260 90 270 90 280 95 Z M140 105 L155 115 M245 105 L260 115' 
+          path: 'M118 92 C106 85 98 95 105 112 C112 128 122 138 138 143 L158 148 C168 153 173 148 168 138 L163 123 C158 108 153 98 148 92 C138 85 128 85 118 92 Z M282 92 C294 85 302 95 295 112 C288 128 278 138 262 143 L242 148 C232 153 227 148 232 138 L237 123 C242 108 247 98 252 92 C262 85 272 85 282 92 Z M138 102 L153 112 C155 114 157 116 159 118 M247 102 L262 112 C264 114 266 116 268 118 M125 105 Q140 108 155 108 M275 105 Q260 108 245 108' 
         },
         { 
           id: 'biceps', 
           name: 'Biceps', 
-          path: 'M140 145 C130 150 125 165 130 180 L135 205 C140 220 150 230 165 235 C175 240 180 235 175 225 L170 200 C165 185 165 170 170 155 C175 150 170 145 160 150 L140 145 Z M260 145 C270 150 275 165 270 180 L265 205 C260 220 250 230 235 235 C225 240 220 235 225 225 L230 200 C235 185 235 170 230 155 C225 150 230 145 240 150 L260 145 Z' 
+          path: 'M138 143 C126 148 120 163 126 178 L132 203 C138 218 148 228 163 233 C173 238 178 233 173 223 L168 198 C163 183 163 168 168 153 C173 148 168 143 158 148 L138 143 Z M262 143 C274 148 280 163 274 178 L268 203 C262 218 252 228 237 233 C227 238 222 233 227 223 L232 198 C237 183 237 168 232 153 C227 148 232 143 242 148 L262 143 Z M148 155 Q158 160 165 165 M252 155 Q242 160 235 165 M145 170 C147 175 150 180 155 185 M255 170 C253 175 250 180 245 185' 
         },
         { 
           id: 'forearms', 
           name: 'Forearms', 
-          path: 'M165 235 C155 240 150 255 155 270 L160 295 C165 310 175 320 190 325 C200 330 205 325 200 315 L195 290 C190 275 190 260 195 245 C200 240 195 235 185 240 L165 235 Z M235 235 C245 240 250 255 245 270 L240 295 C235 310 225 320 210 325 C200 330 195 325 200 315 L205 290 C210 275 210 260 205 245 C200 240 205 235 215 240 L235 235 Z' 
+          path: 'M163 233 C151 238 145 253 151 268 L157 293 C163 308 173 318 188 323 C198 328 203 323 198 313 L193 288 C188 273 188 258 193 243 C198 238 193 233 183 238 L163 233 Z M237 233 C249 238 255 253 249 268 L243 293 C237 308 227 318 212 323 C202 328 197 323 202 313 L207 288 C212 273 212 258 207 243 C202 238 207 233 217 238 L237 233 Z M168 245 Q178 250 185 255 M232 245 Q222 250 215 255 M173 260 L173 275 L178 290 M227 260 L227 275 L222 290' 
         },
         { 
           id: 'abs', 
           name: 'Abs (Rectus Abdominis)', 
-          path: 'M170 195 C165 200 165 215 170 230 L175 255 C180 270 185 285 190 300 L200 315 L210 300 C215 285 220 270 225 255 L230 230 C235 215 235 200 230 195 L170 195 Z M185 210 L185 225 M200 210 L200 225 M215 210 L215 225 M185 240 L185 255 M200 240 L200 255 M215 240 L215 255 M185 270 L185 285 M200 270 L200 285 M215 270 L215 285' 
+          path: 'M168 193 C162 198 162 213 168 228 L173 253 C178 268 183 283 188 298 L200 313 L212 298 C217 283 222 268 227 253 L232 228 C238 213 238 198 232 193 L168 193 Z M183 208 L183 223 C184 225 186 226 188 226 M200 208 L200 223 C201 225 203 226 205 226 M217 208 L217 223 C218 225 220 226 222 226 M183 238 L183 253 C184 255 186 256 188 256 M200 238 L200 253 C201 255 203 256 205 256 M217 238 L217 253 C218 255 220 256 222 256 M183 268 L183 283 C184 285 186 286 188 286 M200 268 L200 283 C201 285 203 286 205 286 M217 268 L217 283 C218 285 220 286 222 286 M175 200 Q200 195 225 200' 
         },
         { 
           id: 'quadriceps', 
           name: 'Quadriceps', 
-          path: 'M155 315 C145 320 140 335 145 350 L150 385 C155 420 165 455 175 485 C180 500 185 505 190 500 L185 475 L180 440 L175 405 C170 385 170 365 175 345 C180 335 175 325 165 330 L155 315 Z M245 315 C255 320 260 335 255 350 L250 385 C245 420 235 455 225 485 C220 500 215 505 210 500 L215 475 L220 440 L225 405 C230 385 230 365 225 345 C220 335 225 325 235 330 L245 315 Z M185 330 C175 335 170 350 175 365 L180 400 C185 435 195 470 205 500 C210 515 215 520 220 515 L215 490 L210 455 L205 420 C200 400 200 380 205 360 C210 350 205 340 195 345 L185 330 Z' 
+          path: 'M153 313 C141 318 135 333 141 348 L147 383 C153 418 163 453 173 483 C178 498 183 503 188 498 L183 473 L178 438 L173 403 C168 383 168 363 173 343 C178 333 173 323 163 328 L153 313 Z M247 313 C259 318 265 333 259 348 L253 383 C247 418 237 453 227 483 C222 498 217 503 212 498 L217 473 L222 438 L227 403 C232 383 232 363 227 343 C222 333 227 323 237 328 L247 313 Z M183 328 C171 333 165 348 171 363 L177 398 C183 433 193 468 203 498 C208 513 213 518 218 513 L213 488 L208 453 L203 418 C198 398 198 378 203 358 C208 348 203 338 193 343 L183 328 Z M158 335 Q168 340 175 345 M242 335 Q232 340 225 345 M188 350 Q198 355 205 360' 
         },
         { 
           id: 'calves', 
           name: 'Calves', 
-          path: 'M175 485 C165 490 160 505 165 520 L170 545 C175 560 185 570 200 575 C210 580 215 575 210 565 L205 540 C200 525 200 510 205 495 C210 490 205 485 195 490 L175 485 Z M225 485 C235 490 240 505 235 520 L230 545 C225 560 215 570 200 575 C190 580 185 575 190 565 L195 540 C200 525 200 510 195 495 C190 490 195 485 205 490 L225 485 Z' 
+          path: 'M173 483 C161 488 155 503 161 518 L167 543 C173 558 183 568 198 573 C208 578 213 573 208 563 L203 538 C198 523 198 508 203 493 C208 488 203 483 193 488 L173 483 Z M227 483 C239 488 245 503 239 518 L233 543 C227 558 217 568 202 573 C192 578 187 573 192 563 L197 538 C202 523 202 508 197 493 C192 488 197 483 207 488 L227 483 Z M178 495 Q188 500 195 505 M222 495 Q212 500 205 505 M183 510 L183 525 L188 540 M217 510 L217 525 L212 540' 
         }
       ],
       back: [
         { 
           id: 'traps', 
           name: 'Traps (Trapezius)', 
-          path: 'M160 80 C150 75 145 85 150 100 L155 125 C160 140 170 150 185 155 L200 160 L215 155 C230 150 240 140 245 125 L250 100 C255 85 250 75 240 80 C230 85 220 90 200 90 C180 90 170 85 160 80 Z M170 100 L170 120 M185 105 L185 125 M200 105 L200 125 M215 105 L215 125 M230 100 L230 120 M180 135 L180 145 M200 135 L200 145 M220 135 L220 145' 
+          path: 'M158 78 C146 71 140 81 146 98 L151 123 C157 138 167 148 183 153 L200 158 L217 153 C233 148 243 138 249 123 L254 98 C260 81 254 71 242 78 C230 85 220 90 200 90 C180 90 170 85 158 78 Z M168 98 L168 118 C169 121 171 123 173 123 M183 103 L183 123 C184 126 186 128 188 128 M200 103 L200 123 C201 126 203 128 205 128 M217 103 L217 123 C218 126 220 128 222 128 M232 98 L232 118 C233 121 235 123 237 123 M178 133 L178 143 C179 145 181 146 183 146 M200 133 L200 143 C201 145 203 146 205 146 M222 133 L222 143 C223 145 225 146 227 146 M165 85 Q200 80 235 85' 
         },
         { 
           id: 'upperback', 
           name: 'Upper Back (Rhomboids)', 
-          path: 'M120 155 C110 160 105 175 110 190 L115 215 C120 230 130 240 145 245 L165 250 C175 255 180 250 175 240 L170 215 C165 200 165 185 170 170 C175 165 170 160 160 165 L120 155 Z M280 155 C290 160 295 175 290 190 L285 215 C280 230 270 240 255 245 L235 250 C225 255 220 250 225 240 L230 215 C235 200 235 185 230 170 C225 165 230 160 240 165 L280 155 Z' 
+          path: 'M118 153 C106 158 100 173 106 188 L112 213 C118 228 128 238 143 243 L163 248 C173 253 178 248 173 238 L168 213 C163 198 163 183 168 168 C173 163 168 158 158 163 L118 153 Z M282 153 C294 158 300 173 294 188 L288 213 C282 228 272 238 257 243 L237 248 C227 253 222 248 227 238 L232 213 C237 198 237 183 232 168 C227 163 232 158 242 163 L282 153 Z M128 165 Q143 170 155 170 M272 165 Q257 170 245 170 M135 180 C137 185 140 190 145 195 M265 180 C263 185 260 190 255 195' 
         },
         { 
           id: 'lats', 
           name: 'Lats (Latissimus Dorsi)', 
-          path: 'M145 245 C135 250 130 265 135 280 L140 315 C145 350 155 385 165 415 C170 430 175 435 180 430 L175 405 L170 370 L165 335 C160 315 160 295 165 275 C170 265 165 255 155 260 L145 245 Z M255 245 C265 250 270 265 265 280 L260 315 C255 350 245 385 235 415 C230 430 225 435 220 430 L225 405 L230 370 L235 335 C240 315 240 295 235 275 C230 265 235 255 245 260 L255 245 Z' 
+          path: 'M143 243 C131 248 125 263 131 278 L137 313 C143 348 153 383 163 413 C168 428 173 433 178 428 L173 403 L168 368 L163 333 C158 313 158 293 163 273 C168 263 163 253 153 258 L143 243 Z M257 243 C269 248 275 263 269 278 L263 313 C257 348 247 383 237 413 C232 428 227 433 222 428 L227 403 L232 368 L237 333 C242 313 242 293 237 273 C232 263 237 253 247 258 L257 243 Z M148 255 Q158 260 165 265 M252 255 Q242 260 235 265 M153 280 C155 285 158 290 163 295 M247 280 C245 285 242 290 237 295' 
         },
         { 
           id: 'triceps', 
           name: 'Triceps', 
-          path: 'M140 155 C130 160 125 175 130 190 L135 215 C140 230 150 240 165 245 C175 250 180 245 175 235 L170 210 C165 195 165 180 170 165 C175 160 170 155 160 160 L140 155 Z M260 155 C270 160 275 175 270 190 L265 215 C260 230 250 240 235 245 C225 250 220 245 225 235 L230 210 C235 195 235 180 230 165 C225 160 230 155 240 160 L260 155 Z' 
+          path: 'M138 153 C126 158 120 173 126 188 L132 213 C138 228 148 238 163 243 C173 248 178 243 173 233 L168 208 C163 193 163 178 168 163 C173 158 168 153 158 158 L138 153 Z M262 153 C274 158 280 173 274 188 L268 213 C262 228 252 238 237 243 C227 248 222 243 227 233 L232 208 C237 193 237 178 232 163 C227 158 232 153 242 158 L262 153 Z M148 165 Q158 170 165 175 M252 165 Q242 170 235 175 M145 180 C147 185 150 190 155 195 M255 180 C253 185 250 190 245 195' 
         },
         { 
           id: 'lowerback', 
           name: 'Lower Back (Erector Spinae)', 
-          path: 'M170 285 C165 290 165 305 170 320 L175 345 C180 360 185 375 190 390 L200 405 L210 390 C215 375 220 360 225 345 L230 320 C235 305 235 290 230 285 L170 285 Z M185 300 L185 315 M200 300 L200 315 M215 300 L215 315 M185 330 L185 345 M200 330 L200 345 M215 330 L215 345 M185 360 L185 375 M200 360 L200 375 M215 360 L215 375' 
+          path: 'M168 283 C162 288 162 303 168 318 L173 343 C178 358 183 373 188 388 L200 403 L212 388 C217 373 222 358 227 343 L232 318 C238 303 238 288 232 283 L168 283 Z M183 298 L183 313 C184 315 186 316 188 316 M200 298 L200 313 C201 315 203 316 205 316 M217 298 L217 313 C218 315 220 316 222 316 M183 328 L183 343 C184 345 186 346 188 346 M200 328 L200 343 C201 345 203 346 205 346 M217 328 L217 343 C218 345 220 346 222 346 M183 358 L183 373 C184 375 186 376 188 376 M200 358 L200 373 C201 375 203 376 205 376 M217 358 L217 373 C218 375 220 376 222 376 M175 290 Q200 285 225 290' 
         },
         { 
           id: 'glutes', 
           name: 'Glutes (Gluteus Maximus)', 
-          path: 'M155 405 C145 410 140 425 145 440 L150 465 C155 480 165 490 180 495 L200 500 L220 495 C235 490 245 480 250 465 L255 440 C260 425 255 410 245 405 C235 400 225 395 200 395 C175 395 165 400 155 405 Z M170 420 L170 440 M185 425 L185 445 M200 425 L200 445 M215 425 L215 445 M230 420 L230 440 M175 455 L175 475 M200 455 L200 475 M225 455 L225 475' 
+          path: 'M153 403 C141 408 135 423 141 438 L147 463 C153 478 163 488 178 493 L200 498 L222 493 C237 488 247 478 253 463 L259 438 C265 423 259 408 247 403 C235 398 225 393 200 393 C175 393 165 398 153 403 Z M168 418 L168 438 C169 441 171 443 173 443 M183 423 L183 443 C184 446 186 448 188 448 M200 423 L200 443 C201 446 203 448 205 448 M217 423 L217 443 C218 446 220 448 222 448 M232 418 L232 438 C233 441 235 443 237 443 M173 453 L173 473 C174 475 176 476 178 476 M200 453 L200 473 C201 475 203 476 205 476 M227 453 L227 473 C228 475 230 476 232 476 M165 408 Q200 403 235 408' 
         },
         { 
           id: 'hamstrings', 
           name: 'Hamstrings', 
-          path: 'M155 495 C145 500 140 515 145 530 L150 565 C155 600 165 635 175 665 C180 680 185 685 190 680 L185 655 L180 620 L175 585 C170 565 170 545 175 525 C180 515 175 505 165 510 L155 495 Z M245 495 C255 500 260 515 255 530 L250 565 C245 600 235 635 225 665 C220 680 215 685 210 680 L215 655 L220 620 L225 585 C230 565 230 545 225 525 C220 515 225 505 235 510 L245 495 Z M185 510 C175 515 170 530 175 545 L180 580 C185 615 195 650 205 680 C210 695 215 700 220 695 L215 670 L210 635 L205 600 C200 580 200 560 205 540 C210 530 205 520 195 525 L185 510 Z' 
+          path: 'M153 493 C141 498 135 513 141 528 L147 563 C153 598 163 633 173 663 C178 678 183 683 188 678 L183 653 L178 618 L173 583 C168 563 168 543 173 523 C178 513 173 503 163 508 L153 493 Z M247 493 C259 498 265 513 259 528 L253 563 C247 598 237 633 227 663 C222 678 217 683 212 678 L217 653 L222 618 L227 583 C232 563 232 543 227 523 C222 513 227 503 237 508 L247 493 Z M183 508 C171 513 165 528 171 543 L177 578 C183 613 193 648 203 678 C208 693 213 698 218 693 L213 668 L208 633 L203 598 C198 578 198 558 203 538 C208 528 203 518 193 523 L183 508 Z M158 505 Q168 510 175 515 M242 505 Q232 510 225 515 M188 530 Q198 535 205 540' 
         }
       ]
     };
@@ -183,127 +184,181 @@ useEffect(() => {
           </Button>
         </div>
       </div>
-
-      <div className="bg-white rounded-lg p-6 shadow-md">
+<div className="bg-white rounded-lg p-6 shadow-md">
         <div className="flex justify-center mb-4">
-          <motion.div
-            key={view}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="muscle-diagram"
-          >
-<svg
-              width="400"
-              height="600"
-              viewBox="0 0 400 600"
-              className="max-w-full h-auto"
-              role="img"
-              aria-label="Interactive human anatomy muscle diagram"
+          {/* Mobile-friendly zoom container with pinch-to-zoom support */}
+          <div className="muscle-diagram-container touch-manipulation overflow-hidden rounded-lg" 
+               style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
+            <motion.div
+              key={view}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="muscle-diagram relative"
             >
-              <defs>
-                <linearGradient id="selectedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#2563EB" />
-                  <stop offset="100%" stopColor="#1D4ED8" />
-                </linearGradient>
-                <linearGradient id="unselectedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#E57373" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#C62828" stopOpacity="0.8" />
-                </linearGradient>
-                <linearGradient id="muscleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FF8A80" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#D32F2F" stopOpacity="0.9" />
-                </linearGradient>
-                <linearGradient id="skeletonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#F5F5F5" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#E0E0E0" stopOpacity="0.6" />
-                </linearGradient>
-                <linearGradient id="recoveryLowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#22C55E" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="#16A34A" stopOpacity="0.4" />
-                </linearGradient>
-                <linearGradient id="recoveryMediumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.7" />
-                  <stop offset="100%" stopColor="#D97706" stopOpacity="0.7" />
-                </linearGradient>
-                <linearGradient id="recoveryHighGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#EF4444" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#DC2626" stopOpacity="0.9" />
-                </linearGradient>
-              </defs>
-              
-              {/* Skeletal structure background for anatomical context */}
-              <g className="skeleton-structure" opacity="0.3">
-                {view === 'front' ? (
-                  <>
-                    {/* Skull */}
-                    <ellipse cx="200" cy="70" rx="35" ry="45" fill="url(#skeletonGradient)" stroke="#BDBDBD" strokeWidth="1"/>
-                    {/* Ribcage */}
-                    <ellipse cx="200" cy="160" rx="50" ry="70" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
-                    <path d="M160 130 Q200 125 240 130" stroke="#BDBDBD" strokeWidth="1" fill="none"/>
-                    <path d="M165 145 Q200 140 235 145" stroke="#BDBDBD" strokeWidth="1" fill="none"/>
-                    <path d="M170 160 Q200 155 230 160" stroke="#BDBDBD" strokeWidth="1" fill="none"/>
-                    <path d="M175 175 Q200 170 225 175" stroke="#BDBDBD" strokeWidth="1" fill="none"/>
-                    {/* Pelvis */}
-                    <ellipse cx="200" cy="300" rx="45" ry="25" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
-                    {/* Arm bones */}
-                    <line x1="150" y1="120" x2="120" y2="200" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="120" y1="200" x2="100" y2="280" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="250" y1="120" x2="280" y2="200" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="280" y1="200" x2="300" y2="280" stroke="#BDBDBD" strokeWidth="3"/>
-                    {/* Leg bones */}
-                    <line x1="180" y1="315" x2="175" y2="450" stroke="#BDBDBD" strokeWidth="4"/>
-                    <line x1="175" y1="450" x2="170" y2="570" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="220" y1="315" x2="225" y2="450" stroke="#BDBDBD" strokeWidth="4"/>
-                    <line x1="225" y1="450" x2="230" y2="570" stroke="#BDBDBD" strokeWidth="3"/>
-                    {/* Spine */}
-                    <line x1="200" y1="90" x2="200" y2="300" stroke="#BDBDBD" strokeWidth="2"/>
-                  </>
-                ) : (
-                  <>
-                    {/* Skull back */}
-                    <ellipse cx="200" cy="70" rx="35" ry="45" fill="url(#skeletonGradient)" stroke="#BDBDBD" strokeWidth="1"/>
-                    {/* Spine detailed */}
-                    <line x1="200" y1="90" x2="200" y2="400" stroke="#BDBDBD" strokeWidth="3"/>
-                    <circle cx="200" cy="110" r="3" fill="#BDBDBD"/>
-                    <circle cx="200" cy="130" r="3" fill="#BDBDBD"/>
-                    <circle cx="200" cy="150" r="3" fill="#BDBDBD"/>
-                    <circle cx="200" cy="170" r="3" fill="#BDBDBD"/>
-                    <circle cx="200" cy="190" r="3" fill="#BDBDBD"/>
-                    {/* Shoulder blades */}
-                    <ellipse cx="160" cy="140" rx="25" ry="35" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
-                    <ellipse cx="240" cy="140" rx="25" ry="35" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
-                    {/* Pelvis back */}
-                    <ellipse cx="200" cy="380" rx="45" ry="25" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
-                    {/* Arm bones */}
-                    <line x1="150" y1="120" x2="120" y2="200" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="120" y1="200" x2="100" y2="280" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="250" y1="120" x2="280" y2="200" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="280" y1="200" x2="300" y2="280" stroke="#BDBDBD" strokeWidth="3"/>
-                    {/* Leg bones */}
-                    <line x1="180" y1="395" x2="175" y2="530" stroke="#BDBDBD" strokeWidth="4"/>
-                    <line x1="175" y1="530" x2="170" y2="570" stroke="#BDBDBD" strokeWidth="3"/>
-                    <line x1="220" y1="395" x2="225" y2="530" stroke="#BDBDBD" strokeWidth="4"/>
-                    <line x1="225" y1="530" x2="230" y2="570" stroke="#BDBDBD" strokeWidth="3"/>
-                  </>
-                )}
-              </g>
-              
-              {/* Muscle groups */}
-              {muscles.map((muscle) => (
-                <MuscleGroup
-                  key={muscle.id}
-                  id={muscle.id}
-                  name={muscle.name}
-                  path={muscle.path}
-                  isSelected={!showRecovery && selectedMuscles.includes(muscle.name)}
-                  onClick={handleMuscleClick}
-                  customFill={showRecovery ? getMuscleRecoveryColor(muscle.name) : null}
-                  recoveryMode={showRecovery}
-                />
-              ))}
-            </svg>
-          </motion.div>
+              <svg
+                width="400"
+                height="600"
+                viewBox="0 0 400 600"
+                className="max-w-full h-auto cursor-pointer select-none"
+                role="img"
+                aria-label="Interactive human anatomy muscle diagram"
+                style={{ minHeight: '400px', userSelect: 'none' }}
+              >
+                <defs>
+                  {/* Enhanced gradient definitions for better muscle visualization */}
+                  <linearGradient id="selectedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#3B82F6" />
+                    <stop offset="50%" stopColor="#2563EB" />
+                    <stop offset="100%" stopColor="#1D4ED8" />
+                  </linearGradient>
+                  <linearGradient id="unselectedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#9CA3AF" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#6B7280" stopOpacity="0.7" />
+                  </linearGradient>
+                  <linearGradient id="muscleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#FCA5A5" stopOpacity="0.85" />
+                    <stop offset="30%" stopColor="#F87171" stopOpacity="0.9" />
+                    <stop offset="70%" stopColor="#EF4444" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#DC2626" stopOpacity="0.85" />
+                  </linearGradient>
+                  <linearGradient id="skeletonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F8FAFC" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#E2E8F0" stopOpacity="0.6" />
+                  </linearGradient>
+                  <linearGradient id="recoveryLowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#22C55E" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#16A34A" stopOpacity="0.4" />
+                  </linearGradient>
+                  <linearGradient id="recoveryMediumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#D97706" stopOpacity="0.7" />
+                  </linearGradient>
+                  <linearGradient id="recoveryHighGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#EF4444" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#DC2626" stopOpacity="0.9" />
+                  </linearGradient>
+                  {/* Muscle fiber texture pattern for realism */}
+                  <pattern id="muscleTexture" patternUnits="userSpaceOnUse" width="4" height="4">
+                    <rect width="4" height="4" fill="transparent"/>
+                    <path d="M 0,4 l 4,-4 M -1,1 l 2,-2 M 3,5 l 2,-2" stroke="#000" strokeWidth="0.5" opacity="0.1"/>
+                  </pattern>
+                </defs>
+                
+                {/* Enhanced skeletal structure background for anatomical context */}
+                <g className="skeleton-structure" opacity="0.25">
+                  {view === 'front' ? (
+                    <>
+                      {/* Skull with more detail */}
+                      <ellipse cx="200" cy="68" rx="38" ry="48" fill="url(#skeletonGradient)" stroke="#BDBDBD" strokeWidth="1"/>
+                      <circle cx="190" cy="62" r="3" fill="#BDBDBD" opacity="0.6"/>
+                      <circle cx="210" cy="62" r="3" fill="#BDBDBD" opacity="0.6"/>
+                      {/* Enhanced ribcage */}
+                      <ellipse cx="200" cy="155" rx="52" ry="72" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
+                      <path d="M158 125 Q200 120 242 125" stroke="#BDBDBD" strokeWidth="1.5" fill="none"/>
+                      <path d="M163 142 Q200 137 237 142" stroke="#BDBDBD" strokeWidth="1.5" fill="none"/>
+                      <path d="M168 159 Q200 154 232 159" stroke="#BDBDBD" strokeWidth="1.5" fill="none"/>
+                      <path d="M173 176 Q200 171 227 176" stroke="#BDBDBD" strokeWidth="1.5" fill="none"/>
+                      <path d="M178 193 Q200 188 222 193" stroke="#BDBDBD" strokeWidth="1.5" fill="none"/>
+                      {/* Sternum */}
+                      <line x1="200" y1="125" x2="200" y2="195" stroke="#BDBDBD" strokeWidth="2"/>
+                      {/* Enhanced pelvis */}
+                      <ellipse cx="200" cy="295" rx="48" ry="28" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
+                      <path d="M152 295 Q200 285 248 295" stroke="#BDBDBD" strokeWidth="1.5" fill="none"/>
+                      {/* Arm bones with joints */}
+                      <circle cx="150" cy="120" r="4" fill="#BDBDBD"/>
+                      <line x1="150" y1="120" x2="118" y2="198" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="118" cy="198" r="3" fill="#BDBDBD"/>
+                      <line x1="118" y1="198" x2="98" y2="278" stroke="#BDBDBD" strokeWidth="3"/>
+                      <circle cx="250" cy="120" r="4" fill="#BDBDBD"/>
+                      <line x1="250" y1="120" x2="282" y2="198" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="282" cy="198" r="3" fill="#BDBDBD"/>
+                      <line x1="282" y1="198" x2="302" y2="278" stroke="#BDBDBD" strokeWidth="3"/>
+                      {/* Leg bones with joints */}
+                      <circle cx="178" cy="315" r="4" fill="#BDBDBD"/>
+                      <line x1="178" y1="315" x2="173" y2="448" stroke="#BDBDBD" strokeWidth="4.5"/>
+                      <circle cx="173" cy="448" r="3" fill="#BDBDBD"/>
+                      <line x1="173" y1="448" x2="168" y2="565" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="222" cy="315" r="4" fill="#BDBDBD"/>
+                      <line x1="222" y1="315" x2="227" y2="448" stroke="#BDBDBD" strokeWidth="4.5"/>
+                      <circle cx="227" cy="448" r="3" fill="#BDBDBD"/>
+                      <line x1="227" y1="448" x2="232" y2="565" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      {/* Enhanced spine */}
+                      <line x1="200" y1="88" x2="200" y2="295" stroke="#BDBDBD" strokeWidth="2.5"/>
+                      <circle cx="200" cy="100" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="120" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="140" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="160" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="180" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="200" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="220" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="240" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="260" r="2" fill="#BDBDBD"/>
+                      <circle cx="200" cy="280" r="2" fill="#BDBDBD"/>
+                    </>
+                  ) : (
+                    <>
+                      {/* Skull back with detail */}
+                      <ellipse cx="200" cy="68" rx="38" ry="48" fill="url(#skeletonGradient)" stroke="#BDBDBD" strokeWidth="1"/>
+                      {/* Enhanced spine detailed */}
+                      <line x1="200" y1="88" x2="200" y2="395" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="200" cy="105" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="125" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="145" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="165" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="185" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="205" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="225" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="245" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="265" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="285" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="305" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="325" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="345" r="3.5" fill="#BDBDBD"/>
+                      <circle cx="200" cy="365" r="3.5" fill="#BDBDBD"/>
+                      {/* Enhanced shoulder blades */}
+                      <ellipse cx="158" cy="138" rx="28" ry="38" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
+                      <ellipse cx="242" cy="138" rx="28" ry="38" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
+                      {/* Pelvis back enhanced */}
+                      <ellipse cx="200" cy="375" rx="48" ry="28" fill="none" stroke="#BDBDBD" strokeWidth="2"/>
+                      {/* Arm bones with joints */}
+                      <circle cx="150" cy="118" r="4" fill="#BDBDBD"/>
+                      <line x1="150" y1="118" x2="118" y2="198" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="118" cy="198" r="3" fill="#BDBDBD"/>
+                      <line x1="118" y1="198" x2="98" y2="278" stroke="#BDBDBD" strokeWidth="3"/>
+                      <circle cx="250" cy="118" r="4" fill="#BDBDBD"/>
+                      <line x1="250" y1="118" x2="282" y2="198" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="282" cy="198" r="3" fill="#BDBDBD"/>
+                      <line x1="282" y1="198" x2="302" y2="278" stroke="#BDBDBD" strokeWidth="3"/>
+                      {/* Leg bones with joints */}
+                      <circle cx="178" cy="390" r="4" fill="#BDBDBD"/>
+                      <line x1="178" y1="390" x2="173" y2="525" stroke="#BDBDBD" strokeWidth="4.5"/>
+                      <circle cx="173" cy="525" r="3" fill="#BDBDBD"/>
+                      <line x1="173" y1="525" x2="168" y2="565" stroke="#BDBDBD" strokeWidth="3.5"/>
+                      <circle cx="222" cy="390" r="4" fill="#BDBDBD"/>
+                      <line x1="222" y1="390" x2="227" y2="525" stroke="#BDBDBD" strokeWidth="4.5"/>
+                      <circle cx="227" cy="525" r="3" fill="#BDBDBD"/>
+                      <line x1="227" y1="525" x2="232" y2="565" stroke="#BDBDBD" strokeWidth="3.5"/>
+                    </>
+                  )}
+                </g>
+                
+                {/* Enhanced muscle groups with better touch targets */}
+                {muscles.map((muscle) => (
+                  <MuscleGroup
+                    key={muscle.id}
+                    id={muscle.id}
+                    name={muscle.name}
+                    path={muscle.path}
+                    isSelected={!showRecovery && selectedMuscles.includes(muscle.name)}
+                    onClick={handleMuscleClick}
+                    customFill={showRecovery ? getMuscleRecoveryColor(muscle.name) : null}
+                    recoveryMode={showRecovery}
+                  />
+                ))}
+              </svg>
+            </motion.div>
+          </div>
         </div>
 
 <div className="text-center">
